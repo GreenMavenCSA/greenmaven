@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.sylvanaqua</groupId>
+    <artifactId>farmhacker</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>database</artifactId>
+  <name>database</name>
+  <description>FarmHacker Database Module</description>
+  
+  <dependencies>
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>5.1.6</version>
+	</dependency>
+  </dependencies>
+  
+  <build>
+    <pluginManagement>
+      <plugins>
+      	<plugin>
+          <groupId>org.flywaydb</groupId>
+          <artifactId>flyway-maven-plugin</artifactId>
+          <version>4.0.3</version>
+          <configuration>
+              <url>jdbc:mysql://localhost:3306/farmhacker</url>
+              <user>root</user>
+              <password>F@rmhack3r</password>
+          </configuration>
+          <executions>
+              <execution>
+                  <id>migrate database</id>
+                  <phase>process-resources</phase>
+                  <goals>
+                      <goal>migrate</goal>
+                  </goals>
+              </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  
+  <profiles>
+        <profile>
+            <id>reset-db</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sql-maven-plugin</artifactId>
+                        <dependencies>
+						  <dependency>
+						    <groupId>mysql</groupId>
+						    <artifactId>mysql-connector-java</artifactId>
+						    <version>5.1.6</version>
+						  </dependency>
+					    </dependencies>
+                        <configuration>
+                          <driver>com.mysql.jdbc.Driver</driver>
+				          <url>jdbc:mysql://localhost:3306/mysql</url>
+				          <username>root</username>
+				          <password>F@rmhack3r</password>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>drop database</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- no transaction -->
+                                    <autocommit>true</autocommit>
+									<sqlCommand>drop database if exists farmhacker;</sqlCommand>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>create database</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- no transaction -->
+                                    <autocommit>true</autocommit>
+									<sqlCommand>create database if not exists farmhacker;</sqlCommand>
+                                </configuration>
+                            </execution>
+                        </executions>
+                      </plugin>
+                      <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                      </plugin>
+                  </plugins>
+               </build>
+             </profile>
+          </profiles>
+</project>
