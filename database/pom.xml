@@ -1,22 +1,43 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
-    <groupId>com.sylvanaqua</groupId>
+    <groupId>com.sylvanaqua.farmhacker</groupId>
     <artifactId>farmhacker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+
+  <groupId>com.sylvanaqua</groupId>
   <artifactId>database</artifactId>
-  <name>database</name>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <packaging>jar</packaging>
+  <name>FarmHacker :: Database</name>
   <description>FarmHacker Database Module</description>
-  
+
   <dependencies>
 	<dependency>
 	    <groupId>mysql</groupId>
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>5.1.6</version>
 	</dependency>
+  <dependency>
+    <groupId>org.jooq</groupId>
+    <artifactId>jooq</artifactId>
+    <version>3.9.0</version>
+  </dependency>
+  <dependency>
+    <groupId>org.jooq</groupId>
+    <artifactId>jooq-meta</artifactId>
+    <version>3.9.0</version>
+  </dependency>
+  <dependency>
+    <groupId>org.jooq</groupId>
+    <artifactId>jooq-codegen</artifactId>
+    <version>3.9.0</version>
+  </dependency>
   </dependencies>
-  
+
   <build>
     <pluginManagement>
       <plugins>
@@ -42,8 +63,60 @@
       </plugins>
     </pluginManagement>
   </build>
-  
+
   <profiles>
+  		<profile>
+  		    <id>generate-orm</id>
+  		    <activation>
+  		    	<activeByDefault>false</activeByDefault>
+  		    </activation>
+  		    <build>
+  		    	<plugins>
+  		    		<plugin>
+					  <groupId>org.jooq</groupId>
+					  <artifactId>jooq-codegen-maven</artifactId>
+					  <version>3.9.0</version>
+
+					  <!-- The plugin should hook into the generate goal -->
+					  <executions>
+					    <execution>
+					      <goals>
+					        <goal>generate</goal>
+					      </goals>
+					    </execution>
+					  </executions>
+
+					  <!-- Specify the plugin configuration.
+					       The configuration format is the same as for the standalone code generator -->
+					  <configuration>
+
+					    <!-- JDBC connection parameters -->
+					    <jdbc>
+					      <driver>com.mysql.jdbc.Driver</driver>
+					      <url>jdbc:mysql://localhost:3306/farmhacker</url>
+			              <user>root</user>
+			              <password>F@rmhack3r</password>
+					    </jdbc>
+
+					    <!-- Generator parameters -->
+					    <generator>
+					      <database>
+					        <name>org.jooq.util.mysql.MySQLDatabase</name>
+					        <includes>.*</includes>
+					        <excludes></excludes>
+					        <inputSchema>farmhacker</inputSchema>
+					      </database>
+					      <target>
+					        <packageName>com.sylanaqua.farmhacker.database</packageName>
+					        <directory>target/generated-sources/jooq</directory>
+					      </target>
+					    </generator>
+					  </configuration>
+					</plugin>
+  		    	</plugins>
+  		    </build>
+  		</profile>
+
         <profile>
             <id>reset-db</id>
             <activation>
@@ -51,7 +124,6 @@
             </activation>
             <build>
                 <plugins>
-                    
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sql-maven-plugin</artifactId>
@@ -103,4 +175,6 @@
                </build>
              </profile>
           </profiles>
+
+  
 </project>

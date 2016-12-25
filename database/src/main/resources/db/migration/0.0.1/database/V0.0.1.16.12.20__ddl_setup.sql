@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS farmhacker_user (
+    username VARCHAR(25) NOT NULL,
+    password VARCHAR(100) NOT NULL, -- This will need to be encrypted
+    role VARCHAR(25),
+    PRIMARY KEY (username)
+);
+
 -- Simple table represents the entire product catalog.
 CREATE TABLE IF NOT EXISTS catalog (
     id INT NOT NULL AUTO_INCREMENT,
