@@ -16,8 +16,8 @@
   <packaging>war</packaging>
 
   <name>FarmHacker ::  Inventory Management</name>
+  
   <dependencies>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -35,6 +35,7 @@
       <version>1.9</version>
     </dependency>
   </dependencies>
+  
   <build>
     <finalName>inventory</finalName>
   </build>

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.sylvanaqua.farmhacker</groupId>
+    <groupId>com.sylvanaqua</groupId>
     <artifactId>farmhacker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
@@ -19,7 +19,7 @@
 	<dependency>
 	    <groupId>mysql</groupId>
 	    <artifactId>mysql-connector-java</artifactId>
-	    <version>5.1.6</version>
+	    <version>6.0.5</version>
 	</dependency>
   <dependency>
     <groupId>org.jooq</groupId>
@@ -73,6 +73,21 @@
   		    <build>
   		    	<plugins>
   		    		<plugin>
+					    <artifactId>maven-clean-plugin</artifactId>
+					    <version>3.0.0</version>
+					    <configuration>
+					      <filesets>
+					        <fileset>
+					          <directory>src/main/java/</directory>
+					          <includes>
+					            <include>**/**</include>
+					          </includes>
+					          <followSymlinks>false</followSymlinks>
+					        </fileset>
+					      </filesets>
+					    </configuration>
+					</plugin>
+  		    		<plugin>
 					  <groupId>org.jooq</groupId>
 					  <artifactId>jooq-codegen-maven</artifactId>
 					  <version>3.9.0</version>
@@ -107,8 +122,9 @@
 					        <inputSchema>farmhacker</inputSchema>
 					      </database>
 					      <target>
-					        <packageName>com.sylanaqua.farmhacker.database</packageName>
-					        <directory>target/generated-sources/jooq</directory>
+					        <packageName>com.sylvanaqua.farmhacker.database</packageName>
+					        <!-- directory>target/generated-sources/jooq</directory-->
+					        <directory>src/main/java</directory>
 					      </target>
 					    </generator>
 					  </configuration>
