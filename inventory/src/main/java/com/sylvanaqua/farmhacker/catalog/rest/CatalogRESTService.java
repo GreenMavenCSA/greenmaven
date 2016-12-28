@@ -43,6 +43,20 @@ public class CatalogRESTService  {
 		return Response.status(200).entity(output).build();
 
 	}
+	
+	/**
+	 * Return all catalog entries matching the search string in either the catalog
+	 * item's category or name.
+	 *
+	 * Ex: http://localhost:8080/inventory/rest/catalogService/getCatalogEntries?searchString=Tend
+	 *
+	 * @param searchString The substring to search
+	 * @return
+	 */
+	public Response getCatalogEntries(@QueryParam("searchString") String searchString) {
+
+		return Response.status(200).entity("Get Catalog Entries").build();
+	}
 
 	@GET
     @Path("ping")
