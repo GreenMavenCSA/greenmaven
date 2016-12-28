@@ -40,7 +40,7 @@ public class CatalogRESTService  {
 			output = "Something went wrong...";
 		}
 		
-		return .status(200).entity(output).build();
+		return Response.status(200).entity(output).build();
 
 	}
 	
