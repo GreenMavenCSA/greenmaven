@@ -26,4 +26,51 @@
   <build>
     <finalName>inventory-ui</finalName>
   </build>
+  
+  <profiles>
+    <profile>
+      <id>build-ui</id>
+      <activation>
+	    <activeByDefault>true</activeByDefault>
+	  </activation>
+	  <build>
+		  <plugins>
+		    <plugin>
+			    <artifactId>maven-clean-plugin</artifactId>
+			    <version>3.0.0</version>
+			    <configuration>
+			      <filesets>
+			        <fileset>
+			          <directory>src/main/webapp/inventory/</directory>
+			          <includes>
+			            <include>**/**</include>
+			          </includes>
+			          <followSymlinks>false</followSymlinks>
+			        </fileset>
+			      </filesets>
+		    </configuration>
+		    </plugin>
+		    <plugin>
+	          <groupId>com.github.eirslett</groupId>
+	          <artifactId>frontend-maven-plugin</artifactId>
+	          <version>1.0</version>
+	          <executions>
+	            <execution>
+					<id>install node and npm all report</id>
+					<goals>
+						<goal>install-node-and-npm</goal>
+					</goals>
+					<configuration>
+						<nodeVersion>v5.3.0</nodeVersion>
+						<npmVersion>3.3.12</npmVersion>
+						<workingDirectory>src/main/webapp/inventory</workingDirectory>
+						<installDirectory>src/main/webapp/inventory</installDirectory>
+					</configuration>
+				</execution>
+	          </executions>
+	        </plugin>
+	      </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

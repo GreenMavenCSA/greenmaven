@@ -39,4 +39,5 @@
     <finalName>inventory</finalName>
   </build>
   
+  <packaging>war</packaging>
 </project>
