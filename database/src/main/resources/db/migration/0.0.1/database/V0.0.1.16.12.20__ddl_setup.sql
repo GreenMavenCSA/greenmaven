@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS catalog (
     id INT NOT NULL AUTO_INCREMENT,
     category VARCHAR(50) NOT NULL,
     name VARCHAR(50) NOT NULL,
+    retail_price FLOAT(3,2) DEFAULT 0.00 NOT NULL,
+    wholesale_price FLOAT(3,2) DEFAULT 0.00 NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -25,8 +27,6 @@ CREATE TABLE IF NOT EXISTS inventory (
 	id INT NOT NULL AUTO_INCREMENT,
 	catalog_id INT,
 	measure SMALLINT DEFAULT 0 NOT NULL,
-	retail_price FLOAT(3,2) DEFAULT 0.00 NOT NULL,
-	wholesale_price FLOAT(3,2) DEFAULT 0.00 NOT NULL,
     time_entered DATETIME NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (catalog_id) REFERENCES catalog(id) ON DELETE CASCADE
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS inventory (
 -- Presents the value of the inventory across categories and pricing levels.
 CREATE VIEW inventory_value AS
 SELECT catalog.category, catalog.name, SUM(inventory.measure),
-       SUM(inventory.retail_price) AS retail_value, SUM(inventory.wholesale_price) AS wholesale_value
+       SUM(catalog.retail_price) AS retail_value, SUM(catalog.wholesale_price) AS wholesale_value
 FROM inventory INNER JOIN catalog ON inventory.catalog_id = catalog.id
 GROUP BY catalog.category, catalog.name;
 

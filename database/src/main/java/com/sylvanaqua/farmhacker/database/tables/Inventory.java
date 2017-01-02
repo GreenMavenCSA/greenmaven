@@ -37,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Inventory extends TableImpl<InventoryRecord> {
 
-    private static final long serialVersionUID = -1148554227;
+    private static final long serialVersionUID = 737287598;
 
     /**
      * The reference instance of <code>farmhacker.inventory</code>
@@ -66,16 +66,6 @@ public class Inventory extends TableImpl<InventoryRecord> {
      * The column <code>farmhacker.inventory.measure</code>.
      */
     public final TableField<InventoryRecord, Short> MEASURE = createField("measure", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
-
-    /**
-     * The column <code>farmhacker.inventory.retail_price</code>.
-     */
-    public final TableField<InventoryRecord, Double> RETAIL_PRICE = createField("retail_price", org.jooq.impl.SQLDataType.FLOAT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0.00", org.jooq.impl.SQLDataType.FLOAT)), this, "");
-
-    /**
-     * The column <code>farmhacker.inventory.wholesale_price</code>.
-     */
-    public final TableField<InventoryRecord, Double> WHOLESALE_PRICE = createField("wholesale_price", org.jooq.impl.SQLDataType.FLOAT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0.00", org.jooq.impl.SQLDataType.FLOAT)), this, "");
 
     /**
      * The column <code>farmhacker.inventory.time_entered</code>.
