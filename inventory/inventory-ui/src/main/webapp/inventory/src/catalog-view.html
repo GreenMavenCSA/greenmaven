@@ -1,0 +1,69 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="catalog-view">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <div class="circle">1</div>
+      <h1>Add Catalog Items</h1>
+
+      <paper-input label="Item Category (e.g. Pork)" required></paper-input>
+      <paper-input label="Item Name (e.g. Tenderloin)" required></paper-input>
+      <paper-input label="Retail Price" required></paper-input>
+      <paper-input label="Wholesale Price" required></paper-input>
+      <br />
+
+      <p>Current Catalog</p>
+
+      <template is="dom-repeat" items="{{categories}}">
+            <span>{{item.name}}; {{item.category}}; {{item.retailPrice}}; {{item.wholesalePrice}}</span><br />
+      </template>
+    </div>
+
+    <iron-ajax
+        id="catalogDatasource"
+        url="http://localhost:8081/inventory/rest/catalogService/getCatalogEntries"
+        params='{"searchString":"all"}'
+        handle-as="json"
+        on-response="handleResponse">
+    </iron-ajax>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'catalog-view',
+      properties: {
+          categories: {
+              type: Array
+          }
+      },
+      ready: function () {
+          this.$.catalogDatasource.generateRequest();
+      },
+      handleResponse: function (data) {
+          this.categories = data.detail.response;
+      }
+    });
+  </script>
+</dom-module>

@@ -49,6 +49,10 @@
               <url>jdbc:mysql://localhost:3306/farmhacker</url>
               <user>root</user>
               <password>F@rmhack3r</password>
+              <locations>
+                <location>filesystem:src/main/resources/db/migration</location>
+                <location>filesystem:src/test/resources/db/migration</location>
+              </locations>
           </configuration>
           <executions>
               <execution>

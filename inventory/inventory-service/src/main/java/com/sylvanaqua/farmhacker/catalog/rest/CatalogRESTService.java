@@ -1,10 +1,13 @@
 package com.sylvanaqua.farmhacker.catalog.rest;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
@@ -26,11 +29,16 @@ public class CatalogRESTService  {
 	@GET
 	@Path("/create")
 	public Response createCatalogEntry(@QueryParam("category") String category, 
-					       		   	   @QueryParam("name") String name) {
+					       		   	   @QueryParam("name") String name,
+					       		   	   @QueryParam("retailPrice") String retailPrice,
+					       		   	   @QueryParam("wholesalePrice") String wholesalePrice ) {
 
 		String output = "Catalog entry added!";
 		
-		CatalogEntry catalogEntry = new CatalogEntry(category, name);
+		CatalogEntry catalogEntry = 
+				new CatalogEntry(category, name, Double.parseDouble(retailPrice),
+						         Double.parseDouble(wholesalePrice));
+		
 		CatalogService catalogService = new CatalogService();
 		
 		try{
@@ -53,9 +61,23 @@ public class CatalogRESTService  {
 	 * @param searchString The substring to search
 	 * @return
 	 */
-	public Response getCatalogEntries(@QueryParam("searchString") String searchString) {
+	@GET
+	@Produces("application/json")
+	@Path("/getCatalogEntries")
+	public String getCatalogEntries(@QueryParam("searchString") String searchString) {
 
-		return Response.status(200).entity("Get Catalog Entries").build();
+		CatalogService catalogService = new CatalogService();
+		List<CatalogEntry> catalogEntries = new ArrayList<CatalogEntry>();
+		
+		try{
+			catalogEntries =
+					catalogService.searchEntries(searchString.equalsIgnoreCase("all") ? "" : 
+						                         searchString);
+			
+		}
+		catch(Exception e){} // Don't leave this here, dammit.
+		
+		return catalogEntries.toString();
 	}
 
 	@GET

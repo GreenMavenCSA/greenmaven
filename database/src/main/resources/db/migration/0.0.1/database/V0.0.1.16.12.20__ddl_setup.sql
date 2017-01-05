@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS catalog (
     id INT NOT NULL AUTO_INCREMENT,
     category VARCHAR(50) NOT NULL,
     name VARCHAR(50) NOT NULL,
-    retail_price FLOAT(3,2) DEFAULT 0.00 NOT NULL,
-    wholesale_price FLOAT(3,2) DEFAULT 0.00 NOT NULL,
+    retail_price FLOAT(6,2) DEFAULT 0.00 NOT NULL,
+    wholesale_price FLOAT(6,2) DEFAULT 0.00 NOT NULL,
     PRIMARY KEY (id)
 );
 
