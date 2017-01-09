@@ -3,7 +3,7 @@
 ## Product Roadmap
 
 ### Epic 1: Vault
-This first module allows farmers to track inventory, project revenue based on prices in the product catalog, and compare projected revenue against actual revenue (by recording point of sale and integrating with Quickbooks).
+This first module allows farmers to track inventory, project revenue based on prices in the product catalog, and compare projected revenue against actual revenue (by recording point of sale). Vault is the central module that drives the rest of the system - in aggregrate across all the farms using it, Vault would effectively represent the entire catalog of local farm products available for sale in a particular region. Vault would integrate tightly with Quickbook's sales register and inventory in order to spur widespread adoption.
 
 ### Epic 2: Lipstick
 E-Commerce website integrates with Farmhacker inventory/revenue. Items are displayed to customers based on average weight and price of what's in the inventory so they get an accurate idea of what they'll be paying. Famrers can enter fulfillment avenues (e.g. farmers markets, CSA pickup, on-farm pickup, etc.) and customers can choose how to receive their items.
