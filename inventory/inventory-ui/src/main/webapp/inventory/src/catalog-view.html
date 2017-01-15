@@ -10,7 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="catalog-view">
@@ -21,29 +23,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         padding: 10px;
       }
+
+      paper-fab.green {
+        --paper-fab-background: var(--paper-green-500);
+        --paper-fab-keyboard-focus-background: var(--paper-green-900);
+        float: right;
+      }
     </style>
 
     <div class="card">
-      <div class="circle">1</div>
-      <h1>Add Catalog Items</h1>
+      <h1>Search Catalog Items</h1>
 
-      <paper-input label="Item Category (e.g. Pork)" required></paper-input>
-      <paper-input label="Item Name (e.g. Tenderloin)" required></paper-input>
-      <paper-input label="Retail Price" required></paper-input>
-      <paper-input label="Wholesale Price" required></paper-input>
-      <br />
+      <paper-input id="searchString" label="Enter your search terms (e.g. chicken)" required on-keyup="updateCatalogView"></paper-input>
 
-      <p>Current Catalog</p>
+      <paper-fab icon="add" title="add" class="green"></paper-fab>
 
+      <p><strong>Results</strong></p>
+
+      <table style="border:0">
       <template is="dom-repeat" items="{{categories}}">
-            <span>{{item.name}}; {{item.category}}; {{item.retailPrice}}; {{item.wholesalePrice}}</span><br />
+          <tr><td width="60%">{{item.name}}</td>
+              <td>{{item.category}}</td>
+              <td>{{item.retailPrice}}</td>
+              <td>{{item.wholesalePrice}}</td>
+          </tr>
       </template>
+    </table>
     </div>
 
     <iron-ajax
         id="catalogDatasource"
         url="http://localhost:8081/inventory/rest/catalogService/getCatalogEntries"
-        params='{"searchString":"all"}'
+        params='{{getParams(searchString)}}'
         handle-as="json"
         on-response="handleResponse">
     </iron-ajax>
@@ -56,14 +67,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
           categories: {
               type: Array
-          }
+          },
+
+          searchString: 'all'
+          
       },
       ready: function () {
+          this.searchString = 'all';
           this.$.catalogDatasource.generateRequest();
       },
       handleResponse: function (data) {
           this.categories = data.detail.response;
+      },
+      updateCatalogView: function () {
+          var currValue = this.$.searchString.value;
+          this.searchString = currValue;
+          this.$.catalogDatasource.generateRequest();
+      },
+      getParams: function(pSearchString){
+          return {searchString: pSearchString};
       }
     });
+
+    
   </script>
 </dom-module>
