@@ -19,7 +19,12 @@
     "paper-input": "PolymerElements/paper-input#^1.1.22",
     "iron-ajax": "PolymerElements/iron-ajax#^1.4.3",
     "paper-fab": "PolymerElements/paper-fab#^1.2.1",
-    "iron-icons": "PolymerElements/iron-icons#^1.2.0"
+    "iron-icons": "PolymerElements/iron-icons#^1.2.0",
+    "iron-collapse": "PolymerElements/iron-collapse#^1.3.0",
+    "paper-button": "PolymerElements/paper-button#^1.0.14",
+    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
+    "iron-form": "PolymerElements/iron-form#^1.1.4",
+    "paper-card": "PolymerElements/paper-card#^1.1.4"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

@@ -26,18 +26,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
-        --app-primary-color: #4285f4;
-        --app-secondary-color: black;
+        --app-primary-color: #000;
+        --app-secondary-color: white;
 
         display: block;
       }
 
       app-header {
-        color: #fff;
+        color: #00ff0a;
         background-color: var(--app-primary-color);
       }
       app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
+        --paper-icon-button-ink-color: black;
       }
 
       .drawer-list {
@@ -66,6 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         tail="{{subroute}}"></app-route>
 
     <app-drawer-layout fullbleed>
+    
       <!-- Drawer content -->
       <app-drawer id="drawer">
         <app-toolbar>Menu</app-toolbar>
