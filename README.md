@@ -1,5 +1,19 @@
 # FarmHacker
 
+## System Overview and Business Case
+
+Farmhacker connects farmers to consumers via direct peer to peer exchange. 
+
+A farmer is traditionally connected to a customer either directly (on-farm sales, farmers markets, CSA), or via a food hub intermediary, or by restaurants and wholesalers. This traditional model comes with a number of problems for both parties, as well as for the future scalability of the local/beyond-organic food movement.
+
+Gaining entry into farmers markets (especially popular ones) can be extremely difficult for new farmers. Selling on-farm requires the farmer's time that could otherwise be spent in the field, and makes grocery logistics more difficult for consumers since on-farm markets have extremely limited hours. CSAs offload a great deal of risk onto the consumer (the customer pays even if there's no harvest, and often doesn't get to choose their items), and only appeal to a small number of people; the small number of these types of customers makes them very difficult/expensive for producers to acquire. Restaurants and wholesalers, while potentially providing a stable income and large orders, require significant price cuts and demand levels that can overwhelm smaller producers. 
+
+In sum, the current suite of vehicles connecting producers and consumers limits the ability of the local food movement to scale, because it's too difficult for both producers and consumers to enter (or persist in) the market.
+
+Farmhacker is a software tool that fills the gap left by traditional sales vehicles. The premise is simple: producers publish their inventory, consumers publish their grocery lists, and farmhacker works as a matchmaker. This can occur via direct search (e.g. a customer searching on a specific item to see what producers have what items, and when/where they can be procured), or via automated exchange (e.g. a customer enters a grocery list, allowing Farmhacker to pick producers based on pre-defined criteria and create a grocery shopping itinerary that's executed either by the customer himself or a third party who delivers.)
+
+
+
 ## Product Roadmap
 
 ### Epic 1: Vault
