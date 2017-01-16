@@ -1,8 +1,8 @@
 # FarmHacker
 
-## System Overview and Business Case
+## Vision and Business Case
 
-Farmhacker connects farmers to consumers via direct peer to peer exchange. 
+Farmhacker helps the local food movement scale up by connecting farmers and consumers via direct peer to peer exchange. 
 
 A farmer is traditionally connected to a customer either directly (on-farm sales, farmers markets, CSA), or via a food hub intermediary, or by restaurants and wholesalers. This traditional model comes with a number of problems for both parties, as well as for the future scalability of the local/beyond-organic food movement.
 
@@ -12,6 +12,19 @@ In sum, the current suite of vehicles connecting producers and consumers limits 
 
 Farmhacker is a software tool that fills the gap left by traditional sales vehicles. The premise is simple: producers publish their inventory, consumers publish their grocery lists, and farmhacker works as a matchmaker. This can occur via direct search (e.g. a customer searching on a specific item to see what producers have what items, and when/where they can be procured), or via automated exchange (e.g. a customer enters a grocery list, allowing Farmhacker to pick producers based on pre-defined criteria and create a grocery shopping itinerary that's executed either by the customer himself or a third party who delivers.)
 
+The producer benefits from a larger pool of retail customers and a market that's active 24/7. She is able to sell at a larger volume but for near-retail prices, without losing direct connection to the customer. She can also limit her time spent at farmers markets and otherwise trying to secure sales.
+
+The consumer no longer has to risk sellouts, parking fights, bad weather, and inconvenient hours as farmers markets. None of the risk, up-front payments, and lack of selection in CSAs. None of the extreme markup from third-party retailers. And no more of the uncertainty that comes from wondering if they know who all the farmers are in the local foodscape. The consumer also enjoys lower prices as compared to traditional market vehicles.
+
+**Anticipated Effects
+
+1.) More new producers and small hyperlocal producers (i.e. home gardeners) are able to enter the market because of the low barrier to market exposure.
+
+2.) Producers are able to lower their prices because the costs of acquiring new customers and maintaining relationships with exisitng customers is much lower, but they're able to maintain both higher toplines and margins because the hub/distributor is eliminated.
+
+3.) On-the-fence local consumers enter the market in force, as it becomes possible to locally-source a much greater share of their grocery lists conveniently, with no risk, and at a lower cost than both retailers (e.g. Whole Foods) and farmers markets.
+
+4.) With a mature logistics system in place, retailers and restaurants may also avail themselves of the service as it offers higher quality, flexibility, and authenticity than Sysco Local or U.S. Foods.
 
 
 ## Product Roadmap
