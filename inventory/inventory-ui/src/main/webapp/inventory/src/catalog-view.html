@@ -1,0 +1,212 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="catalog-view">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+
+      paper-fab.green {
+        --paper-fab-background: var(--paper-green-500);
+        --paper-fab-keyboard-focus-background: var(--paper-green-900);
+        float: right;
+      }
+
+      paper-fab.blue {
+        --paper-fab-background: var(--paper-blue-500);
+        --paper-fab-keyboard-focus-background: var(--paper-blue-900);
+        float: right;
+      }
+    </style>
+
+    <paper-dialog id="modal">
+      <p>Saved. Looks delicious :-)</p>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Close</paper-button>
+      </div>
+    </paper-dialog>
+
+    <div class="card">
+      <paper-fab id="addCatalogButton" icon="add" title="add" class="green" on-click="toggle"></paper-fab>
+
+      <h1>Search Catalog Items</h1>
+
+       <iron-collapse id="collapse">
+         <div>
+          <form is="iron-form" method="get" action="/" id="catalogItemForm">
+            <paper-input id="itemCategory" label="Item category" required auto-validate></paper-input>
+            <paper-input id="itemName" label="Item name" required auto-validate></paper-input>
+            <paper-input id="itemRetailPrice" label="Retail price" required auto-validate pattern="[+-]?[0-9]{1,3}(?:,?[0-9]{3})*\.[0-9]{2}" error-message="Enter number with 2 decimal places"><div prefix>$</div></paper-input>
+            <paper-input id="itemWholeSalePrice" label="Wholesale price" required auto-validate pattern="[+-]?[0-9]{1,3}(?:,?[0-9]{3})*\.[0-9]{2}" error-message="Enter number with 2 decimal places"><div prefix>$</div></paper-input>
+            <paper-button raised style="float:right" on-click="saveCatalogItem"><iron-icon icon="save"></iron-icon>Save</paper-button>
+            <paper-button raised style="float:right" on-click="clearEntryForm"><iron-icon icon="clear"></iron-icon>Clear</paper-button>
+          </form>
+            <br />
+            <br />
+         </div>
+       </iron-collapse>
+
+        <paper-input id="searchString" label="Enter your search terms (e.g. chicken)" required on-keyup="updateCatalogView"></paper-input>
+      
+        <p><strong>Results</strong></p>
+
+        
+          <div>
+            <table style="width:100%">
+              <tr>
+                <td style="width:40%"><strong>Name</strong></td>
+                <td style="width:20%"><strong>Category</strong></td>
+                <td style="width:10%"><strong>Ret.</strong></td>
+                <td style="width:10%"><strong>Whole.</strong></td>
+                <td style="width:20%">&nbsp;</td>
+              </tr>
+            </table>
+          </div>
+        <template is="dom-repeat" items="{{categories}}">
+            <paper-card style="width:100%">
+              <div>
+                <table style="width:100%">  
+                  <tr>
+                    <td style="width:40%"><strong>{{item.name}}</strong></td>
+                    <td style="width:20%">{{item.category}}</td>
+                    <td style="width:10%">${{formatCurrencyDecimal(item.retailPrice)}}</td>
+                    <td style="width:10%">${{formatCurrencyDecimal(item.wholesalePrice)}}</td>
+                    <td style="width:20%">
+                      <paper-button style="float:right">
+                        <iron-icon icon="editor:mode-edit"></iron-icon>
+                      </paper-button>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </paper-card><br />
+        </template>
+      </table>
+    </div>
+
+    <iron-ajax
+        id="catalogGetDatasource"
+        url="http://localhost:8081/inventory/rest/catalogService/getCatalogEntries"
+        params='{{getCatalogReadParams(searchString)}}'
+        handle-as="json"
+        on-response="handleGetResponse">
+    </iron-ajax>
+
+    <iron-ajax
+        id="catalogPutDatasource"
+        url="http://localhost:8081/inventory/rest/catalogService/create"
+        params='{{getCatalogWriteParams(catalogItemCategory, catalogItemName, catalogItemRetailPrice, catalogItemWholesalePrice)}}'
+        handle-as="json"
+        on-response="handlePutResponse">
+    </iron-ajax>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'catalog-view',
+      properties: {
+          categories: {
+              type: Array
+          },
+
+          searchString: 'all',
+          catalogItemCategory: '',
+          catalogItemName: '',
+          catalogItemRetailPrice: '',
+          catalogItemWholesalePrice: ''
+          
+      },
+      ready: function () {
+          this.searchString = 'all';
+          this.$.catalogGetDatasource.generateRequest();
+      },
+      handleGetResponse: function (data) {
+          this.categories = data.detail.response;
+      },
+      handlePutResponse: function (data) {
+        // TODO: Check response for problems, e.g. duplicates,
+        // and dipslay an appropriate error message.
+
+          this.searchString = this.catalogItemName;
+          this.$.catalogGetDatasource.generateRequest();
+          this.clearEntryForm();
+          this.$.modal.open();
+      },
+      updateCatalogView: function () {
+          var currValue = this.$.searchString.value;
+          this.searchString = currValue;
+          this.$.catalogGetDatasource.generateRequest();
+      },
+      getCatalogReadParams: function(pSearchString){
+          return {searchString: pSearchString.trim()};
+      },
+      getCatalogWriteParams: function(pCatalogItemCategory, pCatalogItemName, pCatalogItemRetailPrice, pCatalogItemWholesalePrice){
+          return {category: pCatalogItemCategory,
+                  name: pCatalogItemName,
+                  retailPrice: pCatalogItemRetailPrice,
+                  wholesalePrice: pCatalogItemWholesalePrice};
+      },
+      toggle: function() {
+        this.$.collapse.toggle();
+
+        if(this.$.addCatalogButton.icon == "add"){
+          this.$.addCatalogButton.icon = "close";
+        }
+        else{
+          this.$.addCatalogButton.icon = "add";
+        }
+      },
+      saveCatalogItem: function (){
+        if(this.validate()){
+          this.catalogItemCategory = this.$.itemCategory.value;
+          this.catalogItemName = this.$.itemName.value;
+          this.catalogItemRetailPrice = this.$.itemRetailPrice.value;
+          this.catalogItemWholesalePrice = this.$.itemWholeSalePrice.value;
+
+          this.$.catalogPutDatasource.generateRequest();
+          this.toggle();
+        }
+
+      },
+      validate: function() {
+        return (this.$.itemCategory.validate() &&  this.$.itemName.validate() &&
+           this.$.itemRetailPrice.validate() && this.$.itemWholeSalePrice.validate())
+
+      },
+      clearEntryForm: function() {
+         this.$.catalogItemForm.reset();
+      },
+      formatCurrencyDecimal: function(inputNumber) {
+        return inputNumber.toFixed(2);
+      }
+      
+    });
+
+    
+  </script>
+</dom-module>
