@@ -12,6 +12,14 @@
     <module>inventory</module>
   </modules>
 
+  <dependencies>
+      <dependency>
+          <groupId>org.bitbucket.askllc.krausening</groupId>
+          <artifactId>krausening</artifactId>
+          <version>3</version>
+      </dependency>
+  </dependencies>
+  
   <build>
     <pluginManagement>
        <plugins>

@@ -110,7 +110,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-ajax
         id="catalogGetDatasource"
-        url="http://localhost:8081/inventory/rest/catalogService/getCatalogEntries"
         params='{{getCatalogReadParams(searchString)}}'
         handle-as="json"
         on-response="handleGetResponse">
@@ -118,7 +117,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-ajax
         id="catalogPutDatasource"
-        url="http://localhost:8081/inventory/rest/catalogService/create"
         params='{{getCatalogWriteParams(catalogItemCategory, catalogItemName, catalogItemRetailPrice, catalogItemWholesalePrice)}}'
         handle-as="json"
         on-response="handlePutResponse">
@@ -142,6 +140,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           
       },
       ready: function () {
+          this.$.catalogGetDatasource.url = appProperties.inventoryServiceGetCatalogEntriesServicePath;
+          this.$.catalogPutDatasource.url = appProperties.inventoryServiceCreateCatalogEntryServicePath;
+
           this.searchString = 'all';
           this.$.catalogGetDatasource.generateRequest();
       },

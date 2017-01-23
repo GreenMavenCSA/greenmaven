@@ -15,13 +15,13 @@ import com.sylvanaqua.farmhacker.catalog.entity.CatalogEntry;
 import com.sylvanaqua.farmhacker.database.tables.Catalog;
 import com.sylvanaqua.farmhacker.database.tables.records.CatalogRecord;
 
-public class CatalogService {
+public class CatalogService extends ServiceBase {
 
 	/**
 	 * Default constructor.
 	 */
 	public CatalogService(){
-		
+		super();
 	}
 	
 	/**
@@ -34,12 +34,7 @@ public class CatalogService {
 	 */
 	public void create(CatalogEntry catalogEntry) throws Exception {
 		
-        String userName = "root";
-        String password = "F@rmhack3r";
-        String url = "jdbc:mysql://localhost:3306/farmhacker";
-        Class.forName("com.mysql.jdbc.Driver");
-        
-        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+        try (Connection conn = getConnection()) {
         	DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
         	create.insertInto(Catalog.CATALOG, Catalog.CATALOG.CATEGORY, 
         			          Catalog.CATALOG.NAME, Catalog.CATALOG.RETAIL_PRICE,
@@ -63,14 +58,9 @@ public class CatalogService {
 	 */
 	public List<CatalogEntry> searchEntries(String searchString) throws Exception {
 		
-		String userName = "root";
-        String password = "F@rmhack3r";
-        String url = "jdbc:mysql://localhost:3306/farmhacker";
-        Class.forName("com.mysql.jdbc.Driver");
-        
         List<CatalogEntry> searchResultsAsTransferObjects = new ArrayList<CatalogEntry>();
         
-        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+        try (Connection conn = getConnection()) {
         	DSLContext search = DSL.using(conn, SQLDialect.MYSQL);
         	
         	Result<CatalogRecord> results = 
