@@ -43,8 +43,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <paper-dialog id="modal">
+    <paper-dialog id="modalConfirm">
       <p>Saved. Looks delicious :-)</p>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Close</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="modalDuplicate">
+      <p>This item already exists in the catalog</p>
       <div class="buttons">
         <paper-button dialog-confirm autofocus>Close</paper-button>
       </div>
@@ -150,13 +157,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.categories = data.detail.response;
       },
       handlePutResponse: function (data) {
-        // TODO: Check response for problems, e.g. duplicates,
-        // and dipslay an appropriate error message.
+          var response = data.detail.response;
 
-          this.searchString = this.catalogItemName;
-          this.$.catalogGetDatasource.generateRequest();
-          this.clearEntryForm();
-          this.$.modal.open();
+          if(response.result != 0){
+            this.$.modalDuplicate.open();
+          }
+          else {
+            this.searchString = this.catalogItemName;
+            this.$.catalogGetDatasource.generateRequest();
+            this.clearEntryForm();
+            this.$.modalConfirm.open();
+          }
+          
       },
       updateCatalogView: function () {
           var currValue = this.$.searchString.value;

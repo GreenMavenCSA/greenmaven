@@ -11,11 +11,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONObject;
+
 import com.sylvanaqua.farmhacker.catalog.entity.CatalogEntry;
 import com.sylvanaqua.farmhacker.catalog.service.CatalogService;
 
 @Path("/catalogService")
-public class CatalogRESTService  {
+public class CatalogRESTService extends RESTServiceBase {
 
 	/**
 	 * Create product catalog from category and name.
@@ -27,13 +29,14 @@ public class CatalogRESTService  {
 	 * @return
 	 */
 	@GET
+	@Produces("application/json")
 	@Path("/create")
-	public Response createCatalogEntry(@QueryParam("category") String category, 
-					       		   	   @QueryParam("name") String name,
-					       		   	   @QueryParam("retailPrice") String retailPrice,
-					       		   	   @QueryParam("wholesalePrice") String wholesalePrice ) {
+	public String createCatalogEntry(@QueryParam("category") String category, 
+					       		   	 @QueryParam("name") String name,
+					       		   	 @QueryParam("retailPrice") String retailPrice,
+					       		   	 @QueryParam("wholesalePrice") String wholesalePrice ) {
 
-		String output = "Catalog entry added!";
+		JSONObject response = new JSONObject();
 		
 		CatalogEntry catalogEntry = 
 				new CatalogEntry(category, name, Double.parseDouble(retailPrice),
@@ -42,13 +45,20 @@ public class CatalogRESTService  {
 		CatalogService catalogService = new CatalogService();
 		
 		try{
-			catalogService.create(catalogEntry);
+			if(catalogService.create(catalogEntry)){
+				response.put("result", 0);
+				response.put("message", "Catalog entry created!");
+			}
+			else{
+				response.put("result", 1);
+				response.put("message", "This catalog entry already exists.");
+			}
 		}
 		catch(Exception e){
-			output = "Something went wrong...";
+			logException(e);
 		}
 		
-		return Response.status(200).entity(output).build();
+		return response.toString();
 
 	}
 	
@@ -75,10 +85,14 @@ public class CatalogRESTService  {
 						                         searchString);
 			
 		}
-		catch(Exception e){} // Don't leave this here, dammit.
+		catch(Exception e){
+			logException(e);
+		}
 		
 		return catalogEntries.toString();
 	}
+
+	
 
 	@GET
     @Path("ping")
