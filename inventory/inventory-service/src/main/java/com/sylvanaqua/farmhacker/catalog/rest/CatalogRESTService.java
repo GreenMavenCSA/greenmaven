@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import com.sylvanaqua.farmhacker.catalog.entity.CatalogEntry;
 import com.sylvanaqua.farmhacker.catalog.service.CatalogService;
+import com.sylvanaqua.farmhacker.core.rest.RESTServiceBase;
 
 @Path("/catalogService")
 public class CatalogRESTService extends RESTServiceBase {

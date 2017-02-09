@@ -8,12 +8,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONObject;
+
+import com.sylvanaqua.farmhacker.core.rest.RESTServiceBase;
+import com.sylvanaqua.farmhacker.core.security.SecurityUtil;
 import com.sylvanaqua.farmhacker.useraccount.entity.UserAccount;
 import com.sylvanaqua.farmhacker.useraccount.entity.UserTally;
 import com.sylvanaqua.farmhacker.useraccount.service.UserAccountService;
 
 @Path("/accountService")
-public class UserAccountRESTService {
+public class UserAccountRESTService extends RESTServiceBase {
 
 	/**
 	 * Create user account from SSO or email login info
@@ -28,18 +32,14 @@ public class UserAccountRESTService {
 	 */
 	@GET
 	@Path("/create")
-	public Response createAccount(@QueryParam("userid") String userId,
-								  @QueryParam("password") String password,
-								  @QueryParam("is_eater") int isEater,
-								  @QueryParam("is_grower") int isGrower,
-								  @QueryParam("is_facebook_user") int isFacebookUser,
-								  @QueryParam("zip") int zip) {
+	public String createAccount(@QueryParam("userid") String userId,
+								@QueryParam("password") String password,
+								@QueryParam("is_eater") int isEater,
+								@QueryParam("is_grower") int isGrower,
+								@QueryParam("is_facebook_user") int isFacebookUser,
+								@QueryParam("zip") int zip) {
 		
-		// TODO: Update this method to check for a userid that already
-		// exists before creating a new one. Return a JSON object as a string
-		// with a response code instead of a Response object.
-		
-		String output = "Account created!";
+		JSONObject response = new JSONObject();
 		
 		UserAccount accountInformation = 
 				new UserAccount(userId, password, isEater, isGrower, isFacebookUser, zip);
@@ -47,13 +47,58 @@ public class UserAccountRESTService {
 		UserAccountService userAccountService = new UserAccountService();
 		
 		try {
-			userAccountService.createAccount(accountInformation);
+			if(userAccountService.createAccount(accountInformation)) {
+				response.put("result", 0);
+				response.put("message", "User account created!");
+			}
+			else {
+				response.put("result", 1);
+				response.put("message", "This account already exists.");
+			}
 		}
 		catch (Exception e) {
-			output = "Something went wrong...";
+			logException(e);
 		}
 		
-		return Response.status(200).entity(output).build();
+		return response.toString();
+	}
+	
+	/**
+	 * Authenticates the given username and password against the database.
+	 * 
+	 * @param userId The user ID to authenticate
+	 * @param password The provided plaintext password
+	 * @return JSON object with authentication results (property: result)
+	 */
+	@GET
+	@Path("/authenticate")
+	public String authenticateUser(@QueryParam("userid") String userId,
+								   @QueryParam("password") String password) {
+		
+		JSONObject response = new JSONObject();
+		
+		UserAccount accountInformation = new UserAccount(userId, password);
+		UserAccountService userAccountService = new UserAccountService();
+		
+		try {
+			UserAccount authenticatedAccount = 
+					userAccountService.authenticateAccount(accountInformation);
+			
+			if(authenticatedAccount != null) {
+				response.put("result", 0);
+				response.put("userInfo", authenticatedAccount);
+			}
+			else {
+				response.put("result", 1);
+				response.put("userInfo", "");
+			}
+		}
+		catch (Exception e) {
+			logException(e);
+		}
+		
+		return response.toString();
+		
 	}
 	
 	/**

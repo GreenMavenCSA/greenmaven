@@ -1,4 +1,4 @@
-package com.sylvanaqua.farmhacker.catalog.rest;
+package com.sylvanaqua.farmhacker.core.rest;
 
 public class RESTServiceBase {
 
