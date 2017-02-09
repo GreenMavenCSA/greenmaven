@@ -12,6 +12,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
 import com.sylvanaqua.farmhacker.catalog.entity.CatalogEntry;
+import com.sylvanaqua.farmhacker.core.service.ServiceBase;
 import com.sylvanaqua.farmhacker.database.tables.Catalog;
 import com.sylvanaqua.farmhacker.database.tables.records.CatalogRecord;
 
