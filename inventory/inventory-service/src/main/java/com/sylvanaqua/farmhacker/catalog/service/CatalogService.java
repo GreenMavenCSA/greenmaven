@@ -1,7 +1,6 @@
 package com.sylvanaqua.farmhacker.catalog.service;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,27 +25,65 @@ public class CatalogService extends ServiceBase {
 	}
 	
 	/**
-	 * Create a new entry in the product catalog.
-	 * TODO: This needs to be refactored to get some sanity around creating the
-	 * connection and the context object.
+	 * Create a new entry in the product catalog. Returns true if the item was created,
+	 * false if not created because of a duplicate item.
 	 * 
 	 * @param catalogEntry Catalog entity from client
 	 * @throws Exception
 	 */
-	public void create(CatalogEntry catalogEntry) throws Exception {
+	public boolean create(CatalogEntry catalogEntry) throws Exception {
+		
+		boolean success = false;
 		
         try (Connection conn = getConnection()) {
         	DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
-        	create.insertInto(Catalog.CATALOG, Catalog.CATALOG.CATEGORY, 
-        			          Catalog.CATALOG.NAME, Catalog.CATALOG.RETAIL_PRICE,
-        			          Catalog.CATALOG.WHOLESALE_PRICE)
-        		  .values(catalogEntry.getCategory(), catalogEntry.getName(),
-        				  catalogEntry.getRetailPrice(), catalogEntry.getWholesalePrice())
-        		  .execute();
+        	
+        	if(!catalogEntryExists(catalogEntry)){
+	        	create.insertInto(Catalog.CATALOG, Catalog.CATALOG.CATEGORY, 
+	        			          Catalog.CATALOG.NAME, Catalog.CATALOG.RETAIL_PRICE,
+	        			          Catalog.CATALOG.WHOLESALE_PRICE)
+	        		  .values(catalogEntry.getCategory(), catalogEntry.getName(),
+	        				  catalogEntry.getRetailPrice(), catalogEntry.getWholesalePrice())
+	        		  .execute();
+	        	
+	        	success = true;
+        	}
+        	else{
+        		success = false;
+        	}
+        	
+        	return success;
+        
         }
         catch (DataAccessException dae) {
             throw dae;
         }
+	}
+	
+	/**
+	 * Check if the catalog entry exists in the database. Returns true if so,
+	 * false otherwise.
+	 * 
+	 * @param entry The catalog entry to check for existence
+	 * @throws Throwable
+	 */
+	public boolean catalogEntryExists(CatalogEntry entry) throws Exception {
+		
+		try (Connection conn = getConnection()) {
+        	DSLContext search = DSL.using(conn, SQLDialect.MYSQL);
+        	
+        	Result<CatalogRecord> results =
+	        	search.selectFrom(Catalog.CATALOG)
+	        	      .where(Catalog.CATALOG.NAME.equalIgnoreCase(entry.getName())
+	        	      .and(Catalog.CATALOG.CATEGORY.equalIgnoreCase(entry.getCategory())))
+	        	      .fetch();
+        	
+        	return (results.size() > 0);
+        	      
+		}
+		catch(DataAccessException dae){
+			throw dae;
+		}
 	}
 	
 	/**
