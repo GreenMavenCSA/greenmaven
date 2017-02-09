@@ -1,19 +1,19 @@
-package com.sylvanaqua.farmhacker.catalog.service;
+package com.sylvanaqua.farmhacker.core.service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import com.sylvanaqua.farmhacker.database.DatabaseProperties;
+import com.sylvanaqua.farmhacker.core.database.DatabaseProperties;
 
 public class ServiceBase {
 
 	protected DatabaseProperties dbProperties;
 	
-	ServiceBase(){
+	public ServiceBase(){
 		dbProperties = DatabaseProperties.getInstance();
 	}
 	
-	protected Connection getConnection() throws Exception {
+	public Connection getConnection() throws Exception {
 		
 		String userName = this.dbProperties.getDatabaseUser();
         String password = this.dbProperties.getDatabasePassword();

@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FarmhackerUser extends TableImpl<FarmhackerUserRecord> {
 
-    private static final long serialVersionUID = -1400681115;
+    private static final long serialVersionUID = 1491841299;
 
     /**
      * The reference instance of <code>farmhacker.farmhacker_user</code>
@@ -57,12 +57,32 @@ public class FarmhackerUser extends TableImpl<FarmhackerUserRecord> {
     /**
      * The column <code>farmhacker.farmhacker_user.password</code>.
      */
-    public final TableField<FarmhackerUserRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "");
+    public final TableField<FarmhackerUserRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
 
     /**
      * The column <code>farmhacker.farmhacker_user.role</code>.
      */
     public final TableField<FarmhackerUserRecord, String> ROLE = createField("role", org.jooq.impl.SQLDataType.VARCHAR.length(25), this, "");
+
+    /**
+     * The column <code>farmhacker.farmhacker_user.is_eater</code>.
+     */
+    public final TableField<FarmhackerUserRecord, Integer> IS_EATER = createField("is_eater", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>farmhacker.farmhacker_user.is_grower</code>.
+     */
+    public final TableField<FarmhackerUserRecord, Integer> IS_GROWER = createField("is_grower", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>farmhacker.farmhacker_user.is_facebook_user</code>.
+     */
+    public final TableField<FarmhackerUserRecord, Integer> IS_FACEBOOK_USER = createField("is_facebook_user", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>farmhacker.farmhacker_user.zip</code>.
+     */
+    public final TableField<FarmhackerUserRecord, Integer> ZIP = createField("zip", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * Create a <code>farmhacker.farmhacker_user</code> table reference

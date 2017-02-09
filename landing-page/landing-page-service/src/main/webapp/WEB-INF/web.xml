@@ -6,17 +6,17 @@
   <display-name>FarmHacker Alpha</display-name>
   
   <servlet>
-  	<servlet-name>farmhacker-servlet</servlet-name>
+  	<servlet-name>farmhacker-useraccount-servlet</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
 		     <param-name>com.sun.jersey.config.property.packages</param-name>
-		     <param-value>com.sylvanaqua.farmhacker.catalog.rest</param-value>
+		     <param-value>com.sylvanaqua.farmhacker.useraccount.rest</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>farmhacker-servlet</servlet-name>
+		<servlet-name>farmhacker-useraccount-servlet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 	
