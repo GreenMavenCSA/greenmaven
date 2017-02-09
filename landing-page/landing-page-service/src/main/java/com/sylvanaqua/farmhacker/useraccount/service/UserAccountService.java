@@ -29,6 +29,9 @@ public class UserAccountService extends ServiceBase {
 	 */
 	public void createAccount(UserAccount accountInformation) throws Exception {
 		
+		// TODO: Check for existing account first; return false if the
+		// userid already exists and true otherwise.
+		
 		try (Connection conn = getConnection()) {
         	DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
         	create.insertInto(FarmhackerUser.FARMHACKER_USER, 
