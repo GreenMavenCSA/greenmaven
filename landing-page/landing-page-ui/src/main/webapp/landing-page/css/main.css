@@ -1,0 +1,6 @@
+.jumbotron {
+              background-image:url(../images/background.jpeg);
+              background-size: cover;
+              padding-top:20%;
+              padding-bottom: 20%;
+}
