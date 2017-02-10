@@ -3,6 +3,7 @@ package com.sylvanaqua.farmhacker.useraccount.service;
 import java.sql.Connection;
 
 import org.jooq.DSLContext;
+import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
@@ -10,6 +11,7 @@ import org.jooq.impl.DSL;
 
 import com.sylvanaqua.farmhacker.core.security.SecurityUtil;
 import com.sylvanaqua.farmhacker.core.service.ServiceBase;
+import com.sylvanaqua.farmhacker.database.Farmhacker;
 import com.sylvanaqua.farmhacker.database.tables.Catalog;
 import com.sylvanaqua.farmhacker.database.tables.FarmhackerUser;
 import com.sylvanaqua.farmhacker.database.tables.records.CatalogRecord;
@@ -155,6 +157,43 @@ public class UserAccountService extends ServiceBase {
 	public UserTally getNumberOfGrowersOrEatersForZipCode(int zip) throws Exception {
 		
 		// TODO: GHatz - implement this here.
-		return null;
+		
+		/**
+		 * Retrieve number of growers and eaters based on zip code.
+		 * 
+		 * @param userAccount The user account to check for
+		 * @throws Throwable
+		 * @return UserAccount info for found user, null otherwise.
+		 */
+			try (Connection conn = getConnection()) {
+	        	DSLContext search = DSL.using(conn, SQLDialect.MYSQL);
+	        	
+	        	Record1<Integer> growersByZipCount =
+	        			DSL.selectCount()
+	        			   .from(FarmhackerUser.FARMHACKER_USER)
+	        			   .where(FarmhackerUser.FARMHACKER_USER.ZIP.equal(zip))
+	        			   .and(FarmhackerUser.FARMHACKER_USER.IS_GROWER.equal(1))
+	        			   .fetchOne();
+	        	
+	        	Record1<Integer> eatersByZipCount =
+	        			DSL.selectCount()
+	        			.from(FarmhackerUser.FARMHACKER_USER)
+	        			.where(FarmhackerUser.FARMHACKER_USER.ZIP.equal(zip))
+	        			.and(FarmhackerUser.FARMHACKER_USER.IS_EATER.equal(1))
+	        			.fetchOne();
+	        	
+	        	int numGrowers = growersByZipCount.value1();
+	        	int numEaters = eatersByZipCount.value1();
+	        	
+	        	
+	        	UserTally userTally = new UserTally(numGrowers, numEaters, zip);
+	        	
+	        	return userTally;
+	        	
+			}
+			catch(DataAccessException dae){
+				throw dae;
+			}
+	
 	}
 }
