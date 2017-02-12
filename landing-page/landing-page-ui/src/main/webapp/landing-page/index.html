@@ -9,18 +9,40 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
       
     <link rel="stylesheet" href="css/main.css">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="bower_components/iron-icons/editor-icons.html">
+    <link rel="import" href="bower_components/iron-icons/communication-icons.html">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope" rel="stylesheet">
 
-    <title>Green Maven</title>
+    <style is="custom-style">
+      :root {
+        --primary-text-color: #ff5a5f;
+        --paper-input-container-input: {font-size: 40px; font-color:#FFFFFF;};
+        --paper-input-container-focus-color: --secondary-text-color;
+      }
+
+      .bigIcon {
+        --iron-icon-height: 50px;
+        --iron-icon-width: 50px;
+        --iron-icon-fill-color: #ff5a5f;;
+      }
+    </style>
+
+    <title>GreenMaven</title>
     
 </head>
   <body>
       
       <!--Navigation-->
-      <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+      <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <a class="navbar-brand" href="#">Green Maven</a>
+          <a class="navbar-brand" href="#" style="font-family: 'Sansita', sans-serif;">GreenMaven</a>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item active">
@@ -30,48 +52,119 @@
                 <a class="nav-link" href="#">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">For Growers</a>
-              </li>        
-              <li class="nav-item">
-                <a class="nav-link" href="#">For Eaters</a>
-              </li>
-                <li class="nav-item">
                 <a class="nav-link" href="#">Join</a>
+              </li>   
+              <li class="nav-item">
+                <a class="nav-link" href="#">Work with Us</a>
               </li>
             </ul>
           </div>
         </nav>
       
-      <div class="jumbotron jumbotron-fluid">
+      <div class="jumbotron jumbotron-fluid jumbotron-top">
         <div class="container">
-            <h1 class="display-3">Green Maven</h1>
-            <p class="lead">Farms at your fingertips!</p>
+            <h1 class="display-3" style="font-family: 'Sansita', sans-serif; color:#FFFFFF;">GreenMaven</h1>
+            <h3 class="display-5" style="font-family: 'Dancing Script', cursive; color:#fdc4c6; padding-left:75px">Your&nbsp;Farms&nbsp;at&nbsp;Your&nbsp;Fingertips.&reg;</h3>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row" style="margin-top:25px;">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-10">
+              <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="card-block">
+                  <paper-input id="locationBox" label="Enter your address to find your local marketplace">
+                      <iron-icon class="bigIcon" icon="communication:location-on" prefix></iron-icon>
+                  </paper-input>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1">&nbsp;</div>
           </div>
-    </div>
+
+          <!-- Display this row once the user selects their zip code/address -->
+          <div class="row" style="display:none; margin-top:50px">
+              <div class="col-md-3">
+                  &nbsp;
+              </div>
+              <div class="col-md-3">
+                <div class="card card-inverse card-success mb-3 text-center" 
+                     style="font-family: 'Sansita', sans-serif; font-size:1.8em; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                  <div class="card-block">
+                    <blockquote class="card-blockquote">
+                      <p>I'm a Grower</p>
+                    </blockquote>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="card card-inverse card-danger mb-3 text-center" 
+                     style="font-family: 'Sansita', sans-serif; font-size:1.8em; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                  <div class="card-block">
+                    <blockquote class="card-blockquote">
+                      <p>I'm an Eater</p>
+                    </blockquote>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                  &nbsp;
+              </div>
+          </div>
+        </div>
+      </div>
       
       <div class="container">
-          
-          <h1>Hello, world!</h1>
-      
-            <div class="card card-inverse card-success mb-3 text-center">
-              <div class="card-block">
-                <blockquote class="card-blockquote">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                  <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
+        
+          <div class="row" style="margin-top:25px">
+              <div class="col-md-6" style="font-family: 'Titillium Web', sans-serif; font-size:1.4em">
+                  <h1><span style="font-family: 'Sansita', sans-serif; color: #ff5a5f;">Beyond Food Hubs</span></h1>
+                  <br />
+                  The concept is simple: growers tell us what they've got to sell, eaters tell us what they want
+                  to buy, and we match up the two according to parameters set by the buyer - price, proximity,
+                  favorite farms, growing methods - nothing new here except a design we think you'll be thrilled with.
+                  <br /><br /> 
+                  As the orders pile up, GreenMaven's algorithms aggregate them into "missions" 
+                  that anyone can get paid to execute - be they a farmer, a retiree, or college student with a little 
+                  down time.
+                  <br /><br />
+                  This is a true local food web: the eaters in a community buying directly from their growers, with
+                  other members of the community - often the growers and eaters themselves - connecting them via missions.
+                  Growers and eaters are not just the stars of the show; they run the show. GreenMaven is little more
+                  than math running on computers in the background helping everyone can communicate effectively.
+                  <br /><br /> 
+                  GreenMaven was conceived, designed, and built by farmers. <a href="#" style="color:#ff5a5f">Here's a 
+                  little more detail about GreenMaven's conception and mission</a>, if you're interested.
+              </div>
+              <div class="col-md-6" style="font-family: : 'TitilliumWeb', sans-serif; font-size:1.4em">
+                  <h1><span style="font-family: 'Sansita', sans-serif; color: #ff5a5f;">The Benefits!</span></h1>
+                  <br />
+                  <strong>Growers:</strong> You set your prices. You decide what inventory to expose to the market, 
+                  and when. Your market is open 24 hours a day, 7 days a week, without you having to load your trucks 
+                  and hit the markets. You spend more time growing food and inviting people to your farm, instead 
+                  of sitting at the market hoping it doesn't rain or get too hot. Groceries are delivered in your 
+                  packaging and with your marketing, not ours; your customers are yours.
+                  <br /><br />
+                  <strong>Eaters:</strong> The market's always open. Your groceries can arrive within hours.
+                  Lower prices than online grocers and Whole Foods. More choice than the farmer's market, no
+                  rain, no oppressive heat, and no sellouts. You don't rely on labels - you know who
+                  the farmer is, where they are, and what the farm looks like. And your farmers knows you:
+                  that you like your pork chops 2" thick and the tops still on your parsnips.
+                  <br /><br />
+                  <strong>Drivers:</strong> Execute missions and get paid! You'll literally bring local food to the
+                  mainstream, picking up groceries from farms, community gardens, balcony growers and everyone in
+                  between, and delivering to homes and relay points in your community.
+                  <br /><br />
               </div>
             </div>
-            <div class="card card-outline-success mb-3 text-center">
-              <div class="card-block">
-                <blockquote class="card-blockquote">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                  <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
-              </div>
-            </div>
-          
+          </div>
       </div>
 
+
+      <div class="jumbotron jumbotron-fluid jumbotron-2">
+          &nbsp;
+      </div>
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

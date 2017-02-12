@@ -1,6 +1,13 @@
-.jumbotron {
-              background-image:url(../images/background.jpeg);
+.jumbotron-top {
+              background-image:url(../images/background.jpg);
               background-size: cover;
-              padding-top:20%;
+              padding-top:12%;
+              padding-bottom: 20%;
+}
+
+.jumbotron-2 {
+			  background-image:url(../images/secondBanner.jpg);
+              background-size: cover;
+              padding-top:12%;
               padding-bottom: 20%;
 }
