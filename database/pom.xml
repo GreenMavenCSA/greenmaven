@@ -76,21 +76,7 @@
   		    </activation>
   		    <build>
   		    	<plugins>
-  		    		<plugin>
-					    <artifactId>maven-clean-plugin</artifactId>
-					    <version>3.0.0</version>
-					    <configuration>
-					      <filesets>
-					        <fileset>
-					          <directory>src/main/java/</directory>
-					          <includes>
-					            <include>**/**</include>
-					          </includes>
-					          <followSymlinks>false</followSymlinks>
-					        </fileset>
-					      </filesets>
-					    </configuration>
-					</plugin>
+  		    		
   		    		<plugin>
 					  <groupId>org.jooq</groupId>
 					  <artifactId>jooq-codegen-maven</artifactId>
