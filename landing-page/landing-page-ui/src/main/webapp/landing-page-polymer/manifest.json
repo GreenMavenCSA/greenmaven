@@ -1,0 +1,7 @@
+{
+  "name": "greenmaven",
+  "short_name": "greenmaven",
+  "description": "GreenMaven Landing Page",
+  "start_url": "/",
+  "display": "standalone"
+}
