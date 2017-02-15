@@ -34,7 +34,10 @@
             target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
             if (target.length) {
               if (navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {           
-                window.scrollTo(0,(target.offset().top - $('#navbar').height())) // first value for left offset, second value for top offset
+                $("body").animate({
+                  scrollTop: target.parent().scrollTop() + target.offset().top - target.parent().offset().top - $('#navbar').height()
+                }, 1000);
+                return false;
               }
               else{
                 $('html, body').animate({
