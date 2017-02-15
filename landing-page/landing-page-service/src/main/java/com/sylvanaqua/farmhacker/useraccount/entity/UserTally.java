@@ -20,7 +20,6 @@ public class UserTally {
 	
 	public UserTally(int numGrowers, int numEaters, int zip) {
 		
-		// TODO Auto-generated constructor stub
 		this.numGrowers = numGrowers;
 		this.numEaters = numEaters;
 		this.zip = zip;

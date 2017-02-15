@@ -1,8 +1,7 @@
 .jumbotron-top {
               background-image:url(../images/background.jpg);
               background-size: cover;
-              padding-top:12%;
-              padding-bottom: 20%;
+              min-height: 500px;
 }
 
 .jumbotron-2 {

@@ -1,0 +1,213 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../google-apis/google-maps-api.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+
+<!--
+`paper-input-location` provides components for a Material Design input with location autocomplete based on Google Map Places API.
+
+@demo demo/index.html
+-->
+
+<!--
+### paper-input-location
+Material design: [Text fields](https://www.google.com/design/spec/components/text-fields.html) with location autocomplete
+
+`<paper-input-location>` is a single-line text field with Material Design styling and location autocomplete.
+
+    <paper-input-location label="Place"></paper-input-location>
+
+### Google Maps API
+
+This element work with the Google Maps API. You need a valid API Key. You can get one here: https://developers.google.com/maps/documentation/javascript/get-api-key.
+
+@demo demo/index.html
+-->
+
+
+<dom-module id="paper-input-location">
+    <template>
+    <style is="custom-style">
+         :host {
+            display: block;
+        }
+
+        .bigIcon {
+            --iron-icon-height: 50px;
+            --iron-icon-width: 50px;
+            --iron-icon-fill-color: #ff5a5f;
+          }
+    </style>
+
+    <google-maps-api id="maps" api-key="[[mapsApiKey]]" libraries="places" on-api-load="_onApiLoad"></google-maps-api>
+    <paper-input
+            id="inputPaper"
+            on-value-changed="_resetLocation"
+            on-keydown="_onKeyDown"
+            invalid="{{invalid}}"
+            disabled="[[disabled]]"
+            autofocus="[[autofocus]]"
+            label="[[label]]"
+            value="{{query}}"
+            required="[[required]]"
+            error-message="[[errorMessage]]">
+            <iron-icon class="bigIcon" icon="communication:location-on" prefix></iron-icon>
+    </paper-input>
+  </template>
+</dom-module>
+<script>
+    Polymer({
+
+        is: 'paper-input-location',
+
+        /**
+         * Fired when the place object changed. (After the user click on one Google Maps autocomplete result.)
+         *
+         * @event place-changed
+         */
+
+        properties: {
+            /**
+             * Actual value of the paper-input
+             */
+            query: {
+                type: String,
+                notify: true
+            },
+            /**
+             * Option for the Autocomplete Google Maps API
+             */
+            autocompleteOptions: {
+                type: Object,
+                value: function() {
+                    return {};
+                }
+            },
+            /**
+             * Place object is set after the user click on one Google Maps autocomplete result.
+             */
+            place: {
+                type: Object,
+                value: function() {
+                    return {};
+                },
+                notify: true
+            },
+            /**
+             * Computed object with latitude and longitude
+             */
+            locationGeoPos: {
+                type: Object,
+                computed: '_computeLocation(longitude, latitude)'
+            },
+            /**
+             * Location formatted address of the last clicked place.
+             */
+            locationName: {
+                type: String,
+                notify: true
+            },
+            /**
+             * Latitude of the last clicked place.
+             */
+            latitude: {
+                type: Number,
+                notify: true
+            },
+            /**
+             * Longitude of the last clicked place.
+             */
+            longitude: {
+                type: Number,
+                notify: true
+            },
+            /**
+             * Google Maps api key. To obtain an API key, see https://developers.google.com/maps/documentation/javascript/get-api-key.
+             */
+            mapsApiKey: String,
+            /**
+             * The label for this input.
+             */
+            label: String,
+            /**
+             * Set to true to disable this input.
+             */
+            disabled: Boolean,
+            /**
+             * Set to true to mark the input as required.
+             */
+            required: Boolean,
+            /**
+             * Autofocus propertie
+             */
+            autofocus: Boolean,
+            /**
+             * The error message to display when the input is invalid.
+             */
+            errorMessage: String,
+
+            postalCode: String,
+        },
+        /**
+         * Validate if the input is filled with a valid Google Map address.
+         */
+        validatePlace: function() {
+            if (this.place.geometry) {
+                this.postalCode = this._getPostalCodeFromPlace(this.place);
+                return true;
+            } else {
+                this.$.inputPaper.invalid = true;
+                return false;
+            }
+        },
+        _computeLocation: function(longitude, latitude) {
+            return {
+                'lng': longitude,
+                'lat': latitude
+            }
+        },
+        _resetLocation: function() {
+            this.place = {};
+        },
+        _onApiLoad: function() {
+            var rawInput;
+
+            if (this.$.inputPaper.querySelector('#input')) {
+                rawInput = this.$.inputPaper.querySelector('#input');
+            } else {
+                rawInput = this.$.inputPaper.root.querySelector('#input');
+            }
+
+            this.autocomplete = new google.maps.places.Autocomplete(rawInput, this.options);
+            google.maps.event.addListener(this.autocomplete, 'place_changed', this._onChangePlace.bind(this));
+        },
+        _onChangePlace: function() {
+            this.fire('place-changed');
+            this.$.inputPaper.invalid = false;
+            this.place = this.autocomplete.getPlace();
+            this.locationName = this.autocomplete.getPlace().formatted_address;
+            this.latitude = this.autocomplete.getPlace().geometry.location.lat();
+            this.longitude = this.autocomplete.getPlace().geometry.location.lng();
+        },
+        _onKeyDown: function(e) {
+
+            if (e.keyCode === 13) {
+                 this.fire('keydown');
+            }
+            
+        },
+        _getPostalCodeFromPlace: function(place){
+            for (var i = 0; i < place.address_components.length; i++) {
+              for (var j = 0; j < place.address_components[i].types.length; j++) {
+                if (place.address_components[i].types[j] == "postal_code") {
+                  return place.address_components[i].long_name;
+                }
+              }
+            }
+
+            return "Sorry, can't find your zip mang.";
+        }
+    });
+</script>
