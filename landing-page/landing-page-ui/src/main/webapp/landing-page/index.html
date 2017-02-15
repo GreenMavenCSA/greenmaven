@@ -33,19 +33,10 @@
             var target = $(this.hash);
             target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
             if (target.length) {
-              if (navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {           
-                $("body").animate({
-                  scrollTop: target.parent().scrollTop() + target.offset().top - target.parent().offset().top - $('#navbar').height()
-                }, 1000);
-                return false;
-              }
-              else{
-                $('html, body').animate({
-                  //scrollTop: target.offset().top - $('#navbar').height()
-                  scrollTop: target.parent().scrollTop() + target.offset().top - target.parent().offset().top - $('#navbar').height()
-                }, 1000);
-                return false;
-              }
+              $('html, body').animate({
+                scrollTop: target.offset().top - $('#navbar').height()
+              }, 1000);
+              return false;
             }
           }
         });
