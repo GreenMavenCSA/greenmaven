@@ -37,12 +37,13 @@ public class UserAccountRESTService extends RESTServiceBase {
 								@QueryParam("is_eater") int isEater,
 								@QueryParam("is_grower") int isGrower,
 								@QueryParam("is_facebook_user") int isFacebookUser,
-								@QueryParam("zip") int zip) {
+								@QueryParam("zip") int zip,
+								@QueryParam("market_id") int marketId) {
 		
 		JSONObject response = new JSONObject();
 		
 		UserAccount accountInformation = 
-				new UserAccount(userId, password, isEater, isGrower, isFacebookUser, zip);
+				new UserAccount(userId, password, isEater, isGrower, isFacebookUser, zip, marketId);
 		
 		UserAccountService userAccountService = new UserAccountService();
 		
@@ -102,7 +103,8 @@ public class UserAccountRESTService extends RESTServiceBase {
 	}
 	
 	/**
-	 * Returns the number of growers or eaters for a given zip code.
+	 * Returns the number of growers or eaters in the market serviced by a given
+	 * zip code.
 	 *
 	 * Ex: http://localhost:8080/inventory/rest/accountService/getNumGrowersEaters?zip=22936
 	 *

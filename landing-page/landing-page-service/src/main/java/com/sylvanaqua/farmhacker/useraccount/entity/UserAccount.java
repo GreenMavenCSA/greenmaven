@@ -26,6 +26,9 @@ public class UserAccount {
 	@XmlElement(name="zip")
 	private int zip;
 	
+	@XmlElement(name="market_id")
+	private int marketId;
+	
 	public UserAccount(String userid) {
 		this.userid = userid;
 	}
@@ -36,7 +39,7 @@ public class UserAccount {
 	}
 	
 	public UserAccount(String userid, String password, int isEater, int isGrower,
-			           int isFacebookUser, int zip) {
+			           int isFacebookUser, int zip, int marketId) {
 		
 		this.userid = userid;
 		this.password = password;
@@ -44,6 +47,7 @@ public class UserAccount {
 		this.isGrower = isGrower;
 		this.isFacebookUser = isFacebookUser;
 		this.zip = zip;
+		this.marketId = marketId;
 	}
 	
 	@Override
@@ -56,6 +60,7 @@ public class UserAccount {
 			entryAsJSON.put("is_grower", isGrower);
 			entryAsJSON.put("is_facebook_user", isFacebookUser);
 			entryAsJSON.put("zip", zip);
+			entryAsJSON.put("market_id", marketId);
 			
 			return entryAsJSON.toString();
 		}
@@ -108,6 +113,15 @@ public class UserAccount {
 	public void setZip(int zip) {
 		this.zip = zip;
 	}
+
+	public int getMarketId() {
+		return marketId;
+	}
+
+	public void setMarketId(int marketId) {
+		this.marketId = marketId;
+	}
+	
 	
 	
 }

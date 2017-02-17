@@ -4,25 +4,29 @@ package com.sylvanaqua.farmhacker.useraccount.entity;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.jooq.tools.json.JSONObject;
+import org.json.JSONObject;
 
 @XmlRootElement
 public class UserTally {
 
-	@XmlElement(name="numGrowers")
+	@XmlElement(name="num_growers")
 	private int numGrowers;
 	
-	@XmlElement(name="numEaters")
+	@XmlElement(name="num_eaters")
 	private int numEaters;
 	
 	@XmlElement(name="zip")
 	private int zip;
 	
-	public UserTally(int numGrowers, int numEaters, int zip) {
+	@XmlElement(name="market")
+	private MarketEntity market;
+	
+	public UserTally(int numGrowers, int numEaters, int zip, MarketEntity market) {
 		
 		this.numGrowers = numGrowers;
 		this.numEaters = numEaters;
 		this.zip = zip;
+		this.market = market;
 		
 	}
 
@@ -42,7 +46,7 @@ public class UserTally {
 		this.numEaters = numEaters;
 	}
 	
-	public int getZip(int zip) {
+	public int getZip() {
 		return zip;
 	}
 	
@@ -50,6 +54,7 @@ public class UserTally {
 		this.zip = zip;
 	}
 	
+
 	@Override
 	public String toString(){
 		try{
@@ -57,6 +62,8 @@ public class UserTally {
 			entryAsJSON.put("num_eaters", numEaters);
 			entryAsJSON.put("num_growers", numGrowers);
 			entryAsJSON.put("zip", zip);
+			entryAsJSON.put("market_id", market.getMarketId());
+			entryAsJSON.put("market_name", market.getMarketName());
 			
 			return entryAsJSON.toString();
 		}

@@ -9,6 +9,8 @@ import com.sylvanaqua.farmhacker.database.tables.CatalogCategoryVw;
 import com.sylvanaqua.farmhacker.database.tables.FarmhackerUser;
 import com.sylvanaqua.farmhacker.database.tables.Inventory;
 import com.sylvanaqua.farmhacker.database.tables.InventoryValue;
+import com.sylvanaqua.farmhacker.database.tables.Market;
+import com.sylvanaqua.farmhacker.database.tables.MarketZip;
 import com.sylvanaqua.farmhacker.database.tables.SchemaVersion;
 
 import javax.annotation.Generated;
@@ -51,6 +53,16 @@ public class Tables {
      * VIEW
      */
     public static final InventoryValue INVENTORY_VALUE = com.sylvanaqua.farmhacker.database.tables.InventoryValue.INVENTORY_VALUE;
+
+    /**
+     * The table <code>farmhacker.market</code>.
+     */
+    public static final Market MARKET = com.sylvanaqua.farmhacker.database.tables.Market.MARKET;
+
+    /**
+     * The table <code>farmhacker.market_zip</code>.
+     */
+    public static final MarketZip MARKET_ZIP = com.sylvanaqua.farmhacker.database.tables.MarketZip.MARKET_ZIP;
 
     /**
      * The table <code>farmhacker.schema_version</code>.

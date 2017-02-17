@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FarmhackerUser extends TableImpl<FarmhackerUserRecord> {
 
-    private static final long serialVersionUID = 1491841299;
+    private static final long serialVersionUID = 376675638;
 
     /**
      * The reference instance of <code>farmhacker.farmhacker_user</code>
@@ -83,6 +83,11 @@ public class FarmhackerUser extends TableImpl<FarmhackerUserRecord> {
      * The column <code>farmhacker.farmhacker_user.zip</code>.
      */
     public final TableField<FarmhackerUserRecord, Integer> ZIP = createField("zip", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>farmhacker.farmhacker_user.market_id</code>.
+     */
+    public final TableField<FarmhackerUserRecord, Integer> MARKET_ID = createField("market_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>farmhacker.farmhacker_user</code> table reference

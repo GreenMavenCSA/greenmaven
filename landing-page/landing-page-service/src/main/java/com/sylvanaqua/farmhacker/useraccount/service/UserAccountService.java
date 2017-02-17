@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import org.jooq.DSLContext;
 import org.jooq.Record1;
+import org.jooq.Record2;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
@@ -14,8 +15,12 @@ import com.sylvanaqua.farmhacker.core.service.ServiceBase;
 import com.sylvanaqua.farmhacker.database.Farmhacker;
 import com.sylvanaqua.farmhacker.database.tables.Catalog;
 import com.sylvanaqua.farmhacker.database.tables.FarmhackerUser;
+import com.sylvanaqua.farmhacker.database.tables.Market;
+import com.sylvanaqua.farmhacker.database.tables.MarketZip;
 import com.sylvanaqua.farmhacker.database.tables.records.CatalogRecord;
 import com.sylvanaqua.farmhacker.database.tables.records.FarmhackerUserRecord;
+import com.sylvanaqua.farmhacker.database.tables.records.MarketRecord;
+import com.sylvanaqua.farmhacker.useraccount.entity.MarketEntity;
 import com.sylvanaqua.farmhacker.useraccount.entity.UserAccount;
 import com.sylvanaqua.farmhacker.useraccount.entity.UserTally;
 
@@ -59,13 +64,15 @@ public class UserAccountService extends ServiceBase {
 	        					  FarmhackerUser.FARMHACKER_USER.IS_EATER,
 	        					  FarmhackerUser.FARMHACKER_USER.IS_GROWER,
 	        					  FarmhackerUser.FARMHACKER_USER.IS_FACEBOOK_USER,
-	        					  FarmhackerUser.FARMHACKER_USER.ZIP)
+	        					  FarmhackerUser.FARMHACKER_USER.ZIP,
+	        					  FarmhackerUser.FARMHACKER_USER.MARKET_ID)
 	        		  .values(accountInformation.getUserid(), 
 	        				  accountInformation.getPassword(),
 	        				  accountInformation.getIsEater(), 
 	        				  accountInformation.getIsGrower(),
 	        				  accountInformation.getIsFacebookUser(),
-	        				  accountInformation.getZip())
+	        				  accountInformation.getZip(),
+	        				  accountInformation.getMarketId())
 	        		  .execute();
 	        	
 	        	success = true;
@@ -146,8 +153,8 @@ public class UserAccountService extends ServiceBase {
 	}
 	
 	/**
-	 * Returns a JSON object with the number of growers and eaters in a
-	 * given zip code.
+	 * Returns a JSON object with the number of growers and eaters in the
+	 * market serviced by the given zip code.
 	 * 
 	 * @param zip The zip code to return results for.
 	 * @return JSON object with num_growers and num_eaters properties
@@ -156,44 +163,55 @@ public class UserAccountService extends ServiceBase {
 	 */
 	public UserTally getNumberOfGrowersOrEatersForZipCode(int zip) throws Exception {
 		
-		// TODO: GHatz - implement this here.
-		
-		/**
-		 * Retrieve number of growers and eaters based on zip code.
-		 * 
-		 * @param userAccount The user account to check for
-		 * @throws Throwable
-		 * @return UserAccount info for found user, null otherwise.
-		 */
-			try (Connection conn = getConnection()) {
-	        	DSLContext search = DSL.using(conn, SQLDialect.MYSQL);
+		try (Connection conn = getConnection()) {
+			
+			UserTally userTally = null;
+			int numGrowers = 0;
+			int numEaters = 0;
+			
+        	DSLContext search = DSL.using(conn, SQLDialect.MYSQL);
+        	Result<Record2<Integer, String>> marketRecord = 
+        		search.select(Market.MARKET.ID, Market.MARKET.MARKET_NAME)
+        		       .from(Market.MARKET.join(MarketZip.MARKET_ZIP)
+        				                       .on(Market.MARKET.ID.equal(MarketZip.MARKET_ZIP.MARKET_ID)))
+        		      .where(MarketZip.MARKET_ZIP.POSTAL_CODE.equal(zip))
+        		      .fetch();
+        	
+        	if(marketRecord != null && marketRecord.size() > 0) {
+        		Record2<Integer, String> foundMarket = marketRecord.get(0);
+        		Integer marketID = foundMarket.value1();
+        		String marketName = foundMarket.value2();
+        		
+	        	Record1<Integer> growersByZipsMarketCount =
+	        			search.selectCount()
+	        			      .from(FarmhackerUser.FARMHACKER_USER)
+	        			      .where(FarmhackerUser.FARMHACKER_USER.MARKET_ID.equal(marketID))
+	        			      .and(FarmhackerUser.FARMHACKER_USER.IS_GROWER.equal(1))
+	        			      .fetchOne();
 	        	
-	        	Record1<Integer> growersByZipCount =
-	        			DSL.selectCount()
-	        			   .from(FarmhackerUser.FARMHACKER_USER)
-	        			   .where(FarmhackerUser.FARMHACKER_USER.ZIP.equal(zip))
-	        			   .and(FarmhackerUser.FARMHACKER_USER.IS_GROWER.equal(1))
-	        			   .fetchOne();
+	        	Record1<Integer> eatersByZipsMarketCount =
+	        			search.selectCount()
+	        			      .from(FarmhackerUser.FARMHACKER_USER)
+	        		     	  .where(FarmhackerUser.FARMHACKER_USER.MARKET_ID.equal(marketID))
+	        			      .and(FarmhackerUser.FARMHACKER_USER.IS_EATER.equal(1))
+	        			      .fetchOne();
 	        	
-	        	Record1<Integer> eatersByZipCount =
-	        			DSL.selectCount()
-	        			.from(FarmhackerUser.FARMHACKER_USER)
-	        			.where(FarmhackerUser.FARMHACKER_USER.ZIP.equal(zip))
-	        			.and(FarmhackerUser.FARMHACKER_USER.IS_EATER.equal(1))
-	        			.fetchOne();
+	        	MarketEntity market = new MarketEntity(marketID, marketName);
+	        	numGrowers = growersByZipsMarketCount.value1();
+	        	numEaters = eatersByZipsMarketCount.value1();
 	        	
-	        	int numGrowers = growersByZipCount.value1();
-	        	int numEaters = eatersByZipCount.value1();
-	        	
-	        	
-	        	UserTally userTally = new UserTally(numGrowers, numEaters, zip);
-	        	
-	        	return userTally;
-	        	
-			}
-			catch(DataAccessException dae){
-				throw dae;
-			}
+	        	userTally = new UserTally(numGrowers, numEaters, zip, market);
+        	}
+        	else {
+        		userTally = new UserTally(0, 0, zip, new MarketEntity(-1, ""));
+        	}
+        	
+        	return userTally;
+        	
+		}
+		catch(DataAccessException dae){
+			throw dae;
+		}
 	
 	}
 }

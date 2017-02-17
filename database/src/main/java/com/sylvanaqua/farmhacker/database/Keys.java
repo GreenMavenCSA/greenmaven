@@ -7,10 +7,14 @@ package com.sylvanaqua.farmhacker.database;
 import com.sylvanaqua.farmhacker.database.tables.Catalog;
 import com.sylvanaqua.farmhacker.database.tables.FarmhackerUser;
 import com.sylvanaqua.farmhacker.database.tables.Inventory;
+import com.sylvanaqua.farmhacker.database.tables.Market;
+import com.sylvanaqua.farmhacker.database.tables.MarketZip;
 import com.sylvanaqua.farmhacker.database.tables.SchemaVersion;
 import com.sylvanaqua.farmhacker.database.tables.records.CatalogRecord;
 import com.sylvanaqua.farmhacker.database.tables.records.FarmhackerUserRecord;
 import com.sylvanaqua.farmhacker.database.tables.records.InventoryRecord;
+import com.sylvanaqua.farmhacker.database.tables.records.MarketRecord;
+import com.sylvanaqua.farmhacker.database.tables.records.MarketZipRecord;
 import com.sylvanaqua.farmhacker.database.tables.records.SchemaVersionRecord;
 
 import javax.annotation.Generated;
@@ -41,6 +45,8 @@ public class Keys {
 
     public static final Identity<CatalogRecord, Integer> IDENTITY_CATALOG = Identities0.IDENTITY_CATALOG;
     public static final Identity<InventoryRecord, Integer> IDENTITY_INVENTORY = Identities0.IDENTITY_INVENTORY;
+    public static final Identity<MarketRecord, Integer> IDENTITY_MARKET = Identities0.IDENTITY_MARKET;
+    public static final Identity<MarketZipRecord, Integer> IDENTITY_MARKET_ZIP = Identities0.IDENTITY_MARKET_ZIP;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
@@ -49,6 +55,8 @@ public class Keys {
     public static final UniqueKey<CatalogRecord> KEY_CATALOG_PRIMARY = UniqueKeys0.KEY_CATALOG_PRIMARY;
     public static final UniqueKey<FarmhackerUserRecord> KEY_FARMHACKER_USER_PRIMARY = UniqueKeys0.KEY_FARMHACKER_USER_PRIMARY;
     public static final UniqueKey<InventoryRecord> KEY_INVENTORY_PRIMARY = UniqueKeys0.KEY_INVENTORY_PRIMARY;
+    public static final UniqueKey<MarketRecord> KEY_MARKET_PRIMARY = UniqueKeys0.KEY_MARKET_PRIMARY;
+    public static final UniqueKey<MarketZipRecord> KEY_MARKET_ZIP_PRIMARY = UniqueKeys0.KEY_MARKET_ZIP_PRIMARY;
     public static final UniqueKey<SchemaVersionRecord> KEY_SCHEMA_VERSION_PRIMARY = UniqueKeys0.KEY_SCHEMA_VERSION_PRIMARY;
 
     // -------------------------------------------------------------------------
@@ -64,12 +72,16 @@ public class Keys {
     private static class Identities0 extends AbstractKeys {
         public static Identity<CatalogRecord, Integer> IDENTITY_CATALOG = createIdentity(Catalog.CATALOG, Catalog.CATALOG.ID);
         public static Identity<InventoryRecord, Integer> IDENTITY_INVENTORY = createIdentity(Inventory.INVENTORY, Inventory.INVENTORY.ID);
+        public static Identity<MarketRecord, Integer> IDENTITY_MARKET = createIdentity(Market.MARKET, Market.MARKET.ID);
+        public static Identity<MarketZipRecord, Integer> IDENTITY_MARKET_ZIP = createIdentity(MarketZip.MARKET_ZIP, MarketZip.MARKET_ZIP.ID);
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
         public static final UniqueKey<CatalogRecord> KEY_CATALOG_PRIMARY = createUniqueKey(Catalog.CATALOG, "KEY_catalog_PRIMARY", Catalog.CATALOG.ID);
         public static final UniqueKey<FarmhackerUserRecord> KEY_FARMHACKER_USER_PRIMARY = createUniqueKey(FarmhackerUser.FARMHACKER_USER, "KEY_farmhacker_user_PRIMARY", FarmhackerUser.FARMHACKER_USER.USERNAME);
         public static final UniqueKey<InventoryRecord> KEY_INVENTORY_PRIMARY = createUniqueKey(Inventory.INVENTORY, "KEY_inventory_PRIMARY", Inventory.INVENTORY.ID);
+        public static final UniqueKey<MarketRecord> KEY_MARKET_PRIMARY = createUniqueKey(Market.MARKET, "KEY_market_PRIMARY", Market.MARKET.ID);
+        public static final UniqueKey<MarketZipRecord> KEY_MARKET_ZIP_PRIMARY = createUniqueKey(MarketZip.MARKET_ZIP, "KEY_market_zip_PRIMARY", MarketZip.MARKET_ZIP.ID);
         public static final UniqueKey<SchemaVersionRecord> KEY_SCHEMA_VERSION_PRIMARY = createUniqueKey(SchemaVersion.SCHEMA_VERSION, "KEY_schema_version_PRIMARY", SchemaVersion.SCHEMA_VERSION.INSTALLED_RANK);
     }
 

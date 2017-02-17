@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/paper-input-location/paper-input-location.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
@@ -125,10 +126,22 @@
                   <div class="card-block">
                     <table cellpadding="10" cellspacing="10">
                       <tr><td width="50%">
-                      Your market for postal code [[postal_code]] is Charlottesville Virginia. 12 farmers serving 122 customers!
-                      <br /><br />
-                      To join the marketplace, just enter your email address and tell us if you're interested in growing,
-                      eating, or driving.
+                      <iron-collapse id="eligibleCollapse">
+                        Based on your zip code, you are eligible to join the {{marketName}} market!<br /><br />
+                        Currenty we have {{growersInMarket}} growers registered to serve {{eatersInMarket}} customers.
+                        Once we get to 500 customers and 30 growers, we'll start deliveries! Add yourself to the ranks
+                        of growers, eaters, and/or drivers by adding your email with the form on the right.
+                        <br /><br />
+                        To join the marketplace, just enter your email address and tell us if you're interested in growing,
+                        eating, or driving.
+                      </iron-collapse>
+                      <iron-collapse id="ineligibleCollapse">
+                        <div>
+                        Your zip code falls outside our pilot project area. However, it'll help us out a lot to gauge
+                        interest outside of the Charlottesville area. Please fill out the form to the right so we
+                        can keep track of interest in GreenMaven in your area!
+                        </div>
+                      </iron-collapse>
                       </td>
                       <td>
                          <paper-button style="float:right" on-tap="toggleSignupForm"><iron-icon icon="clear"></iron-icon>Close</paper-button>
@@ -196,57 +209,6 @@
           </div>
       </div>
 
-
-      <!--div class="jumbotron jumbotron-fluid jumbotron-2">
-          &nbsp;
-      </div>
-
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <h1><p class="text-center" style="font-family: 'Sansita', sans-serif; color: #ff5a5f;">Join the Movement!</p></h1>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-12" style="font-family: 'Titillium Web', sans-serif; font-size:1.4em">
-            The more growers, eaters, and drivers we have, the better it gets for everyone. Customers get more choices, lower
-            prices, and shorter delivery times. Growers get more sales and more time on the farm. And drivers get more opportunities to
-            make money in their spare time.
-            <br /><br />
-            Be part of the revolution that takes local food mainstream! Enter your email below (your information will never be
-            sold) and indicate if you're interested in being a grower, an eater, a driver, or all three! 
-          </div>
-        </div>
-
-        <div class="row" style="margin-bottom:50px;margin-top:50px; border: 1px solid #ff5a5f; padding-top: 20px; padding-bottom: 20px">
-          <div class="col-md-4" style="margin-top:auto; margin-bottom:auto;">
-            <paper-input class="emailBox" label="Your best email address">
-                <iron-icon class="littleIcon" icon="communication:email" prefix></iron-icon>
-            </paper-input>
-          </div>
-          <div class="col-md-2" style="margin-top:auto; margin-bottom:auto;">
-            <paper-checkbox>
-               <strong>Grower</strong> <span class="subtitle">Pro farmer or home gardener, it's all good.</span>
-            </paper-checkbox>
-          </div>
-          <div class="col-md-2" style="margin-top:auto; margin-bottom:auto;">
-            <paper-checkbox>
-               <strong>Eater</strong> <span class="subtitle">True local with grocery store convenience</span>
-            </paper-checkbox>
-          </div>
-          <div class="col-md-2" style="margin-top:auto; margin-bottom:auto;">
-            <paper-checkbox>
-               <strong>Driver</strong> <span class="subtitle">Make extra cash visiting farms near you!</span>
-            </paper-checkbox>
-          </div>
-          <div class="col-md-2" style="margin-top:auto; margin-bottom:auto;">
-            <button type="button" class="btn btn-secondary btn-lg" style="color: #FFFFFF; background-color: #ff5a5f; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);">Count me in!
-            </button>
-          </div>
-        </div>
-      </div-->
-
       <div class="container-fluid" style="background-color: #000000">
         <div class="row">
           <div class="col-md-12">
@@ -256,6 +218,14 @@
           </div>
         </div>
       </div>
+
+      <iron-ajax
+        id="getMarketInfoDatasource"
+        params='{{getMarketInfoDatasourceParams(postalCode)}}'
+        handle-as="json"
+        on-response="handleGetResponse">
+      </iron-ajax>
+
   </template>
 
   <script>
@@ -264,16 +234,53 @@
       is: 'greenmaven-app',
 
       properties: {
-        postal_code: ''
+        postalCode: '',
+        marketId: -1,
+        marketName: '',
+        growersInMarket: 0,
+        eatersInMarket: 0
       },
 
+      ready: function () {
+          this.$.getMarketInfoDatasource.url = appProperties.userAccountServiceGetGrowersEatersServicePath;
+      },
+      getMarketInfoDatasourceParams: function(pZip){
+          return {zip: pZip.trim()};
+      },
+      handleGetResponse: function (data) {
+          var userTally = data.detail.response;
+          this.marketId = userTally.market_id;
+          this.marketName = userTally.market_name;
+          this.growersInMarket = userTally.num_growers;
+          this.eatersInMarket = userTally.num_eaters;
 
+          this.toggleSignupForm();
+
+          if(this.marketId == -1){
+            if(!this.$.ineligibleCollapse.opened){
+              this.$.ineligibleCollapse.toggle();
+            }
+            if(this.$.eligibleCollapse.opened){
+              this.$.eligibleCollapse.toggle();
+            }
+          }
+          else{
+            if(!this.$.eligibleCollapse.opened){
+              this.$.eligibleCollapse.toggle();
+            }
+            if(this.$.ineligibleCollapse.opened){
+              this.$.ineligibleCollapse.toggle();
+            }
+          }
+          
+      },
+      
       checkAddress: function(e) {
         if(this.$.locationBox.validatePlace() &&
            !this.$.addressCollapse.opened){
           
-          this.toggleSignupForm();
-          this.postal_code = this.$.locationBox.postalCode;
+          this.postalCode = this.$.locationBox.postalCode;
+          this.$.getMarketInfoDatasource.generateRequest();
         }
       },
 

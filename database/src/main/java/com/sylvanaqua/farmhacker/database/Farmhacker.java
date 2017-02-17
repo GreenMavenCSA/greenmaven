@@ -9,6 +9,8 @@ import com.sylvanaqua.farmhacker.database.tables.CatalogCategoryVw;
 import com.sylvanaqua.farmhacker.database.tables.FarmhackerUser;
 import com.sylvanaqua.farmhacker.database.tables.Inventory;
 import com.sylvanaqua.farmhacker.database.tables.InventoryValue;
+import com.sylvanaqua.farmhacker.database.tables.Market;
+import com.sylvanaqua.farmhacker.database.tables.MarketZip;
 import com.sylvanaqua.farmhacker.database.tables.SchemaVersion;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Farmhacker extends SchemaImpl {
 
-    private static final long serialVersionUID = -764342323;
+    private static final long serialVersionUID = 124889809;
 
     /**
      * The reference instance of <code>farmhacker</code>
@@ -65,6 +67,16 @@ public class Farmhacker extends SchemaImpl {
      * VIEW
      */
     public final InventoryValue INVENTORY_VALUE = com.sylvanaqua.farmhacker.database.tables.InventoryValue.INVENTORY_VALUE;
+
+    /**
+     * The table <code>farmhacker.market</code>.
+     */
+    public final Market MARKET = com.sylvanaqua.farmhacker.database.tables.Market.MARKET;
+
+    /**
+     * The table <code>farmhacker.market_zip</code>.
+     */
+    public final MarketZip MARKET_ZIP = com.sylvanaqua.farmhacker.database.tables.MarketZip.MARKET_ZIP;
 
     /**
      * The table <code>farmhacker.schema_version</code>.
@@ -101,6 +113,8 @@ public class Farmhacker extends SchemaImpl {
             FarmhackerUser.FARMHACKER_USER,
             Inventory.INVENTORY,
             InventoryValue.INVENTORY_VALUE,
+            Market.MARKET,
+            MarketZip.MARKET_ZIP,
             SchemaVersion.SCHEMA_VERSION);
     }
 }
