@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/paper-input-location/paper-input-location.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
@@ -46,7 +47,6 @@
         --paper-checkbox-label-color: #fdc4c6;
         --paper-checkbox-label-spacing: 0;
         --paper-checkbox-margin: 8px 16px 8px 0;
-        --paper-checkbox-vertical-align: top;
       }
 
       .quickIcon {
@@ -73,6 +73,13 @@
           max-width: 150px;
       }
     </style>
+
+    <paper-dialog id="modalConfirm">
+      <p>You're all set!</p>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Close</paper-button>
+      </div>
+    </paper-dialog>
 
     <div id="navbar" style="position: fixed; right: 0; left: 0; z-index: 1030; top: 0">
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -111,7 +118,7 @@
             <div class="col-md-10">
               <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                 <div class="card-block">
-                  <paper-input-location id="locationBox" class="bigSearchBox" label="Enter your address to find your local marketplace" maps-api-key="AIzaSyBMjBxBM8PUa5T_kezydz2Q1Slev1hn19g" on-place-changed="checkAddress" on-keydown="checkAddress">
+                  <paper-input-location id="locationBox" class="bigSearchBox" label="Enter your address to find your local marketplace" maps-api-key="AIzaSyBMjBxBM8PUa5T_kezydz2Q1Slev1hn19g" on-place-changed="checkAddress" on-keyup="checkAddress">
                   </paper-input-location>
                 </div>
               </div>
@@ -121,11 +128,8 @@
           <iron-collapse id="addressCollapse">
             <div class="row" style="margin-top:5px;">
                <div class="col-md-10 offset-md-1">
-                <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background: #292b2c; color: #fefefe;
-                                         font-family: 'Titillium Web', sans-serif;">
+                <div class="card" style="background: #292b2c; color: #fefefe; font-family: 'Titillium Web', sans-serif;">
                   <div class="card-block">
-                    <table cellpadding="10" cellspacing="10">
-                      <tr><td width="50%">
                       <iron-collapse id="eligibleCollapse">
                         Based on your zip code, you are eligible to join the {{marketName}} market!<br /><br />
                         Currenty we have {{growersInMarket}} growers registered to serve {{eatersInMarket}} customers.
@@ -134,26 +138,21 @@
                         <br /><br />
                         To join the marketplace, just enter your email address and tell us if you're interested in growing,
                         eating, or driving.
+                        <br /><br />
                       </iron-collapse>
                       <iron-collapse id="ineligibleCollapse">
-                        <div>
                         Your zip code falls outside our pilot project area. However, it'll help us out a lot to gauge
                         interest outside of the Charlottesville area. Please fill out the form to the right so we
                         can keep track of interest in GreenMaven in your area!
-                        </div>
+                        <br /><br />
                       </iron-collapse>
-                      </td>
-                      <td>
-                         <paper-button style="float:right" on-tap="toggleSignupForm"><iron-icon icon="clear"></iron-icon>Close</paper-button>
-                         <paper-input id="quickEmail" class="quickEmailBox" label="Email address" style="color:#FFFFFF">
-                           <iron-icon class="quickIcon" icon="communication:email" prefix></iron-icon>
-                         </paper-input>
-                         <paper-checkbox class="quickCheckbox" style="color:#FFFFFF"><strong>Grower</strong></paper-checkbox><br />
-                         <paper-checkbox class="quickCheckbox" style="color:#FFFFFF"><strong>Eater</strong></paper-checkbox><br />
-                         <paper-checkbox class="quickCheckbox" style="color:#FFFFFF"><strong>Driver</strong></paper-checkbox>
-                      </td>
-                      </tr>
-                    </table>
+                      <paper-input id="quickEmail" class="quickEmailBox" label="Email address" style="color:#FFFFFF">
+                        <iron-icon class="quickIcon" icon="communication:email" prefix></iron-icon>
+                      </paper-input>
+                      <paper-checkbox class="quickCheckbox" style="color:#FFFFFF"><strong>Grower</strong></paper-checkbox>&nbsp;&nbsp;
+                      <paper-checkbox class="quickCheckbox" style="color:#FFFFFF"><strong>Eater</strong></paper-checkbox>&nbsp;&nbsp;
+                      <paper-checkbox class="quickCheckbox" style="color:#FFFFFF"><strong>Driver</strong></paper-checkbox><br />
+                      <paper-button on-tap="registerUser"><iron-icon icon="done"></iron-icon>Done</paper-button>
                   </div>
                 </div>
               </div>
@@ -276,18 +275,37 @@
       },
       
       checkAddress: function(e) {
-        if(this.$.locationBox.validatePlace() &&
-           !this.$.addressCollapse.opened){
-          
+
+        // If the search box isn't a valid address and the signup form is open, close it
+        if(!this.$.locationBox.validatePlace() &&
+           this.$.addressCollapse.opened){
+          this.$.addressCollapse.toggle();
+        }
+
+        // If the search box is valid, close the signup form if it's already open. Then
+        // call the webservice.
+        if(this.$.locationBox.validatePlace()) 
+        {
+          if(this.$.addressCollapse.opened){
+            this.$.addressCollapse.toggle;
+          }
           this.postalCode = this.$.locationBox.postalCode;
           this.$.getMarketInfoDatasource.generateRequest();
         }
-      },
 
+
+        // If the search box isn't a valid address and the signup form is closed,
+        // don't do anything.
+      },
       toggleSignupForm: function(){
         this.$.addressCollapse.toggle();
-      }
+      },
+      registerUser: function(){
 
+        // Save the user info
+        this.$.modalConfirm.open();
+        this.$.addressCollapse.toggle();
+      }
     });
 
 

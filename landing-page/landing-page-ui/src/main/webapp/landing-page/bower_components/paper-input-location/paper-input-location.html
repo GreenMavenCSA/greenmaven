@@ -42,7 +42,7 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
     <paper-input
             id="inputPaper"
             on-value-changed="_resetLocation"
-            on-keydown="_onKeyDown"
+            on-keyup="_onKeyUp"
             invalid="{{invalid}}"
             disabled="[[disabled]]"
             autofocus="[[autofocus]]"
@@ -188,11 +188,8 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
             this.latitude = this.autocomplete.getPlace().geometry.location.lat();
             this.longitude = this.autocomplete.getPlace().geometry.location.lng();
         },
-        _onKeyDown: function(e) {
-
-            if (e.keyCode === 13) {
-                 this.fire('keydown');
-            }
+        _onKeyUp: function(e) {
+                 this.fire('keyup');
             
         },
         _getPostalCodeFromPlace: function(place){
