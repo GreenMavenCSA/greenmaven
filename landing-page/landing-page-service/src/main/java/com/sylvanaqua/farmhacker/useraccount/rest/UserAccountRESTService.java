@@ -36,6 +36,7 @@ public class UserAccountRESTService extends RESTServiceBase {
 								@QueryParam("password") String password,
 								@QueryParam("is_eater") int isEater,
 								@QueryParam("is_grower") int isGrower,
+								@QueryParam("is_driver") int isDriver,
 								@QueryParam("is_facebook_user") int isFacebookUser,
 								@QueryParam("zip") int zip,
 								@QueryParam("market_id") int marketId) {
@@ -43,7 +44,7 @@ public class UserAccountRESTService extends RESTServiceBase {
 		JSONObject response = new JSONObject();
 		
 		UserAccount accountInformation = 
-				new UserAccount(userId, password, isEater, isGrower, isFacebookUser, zip, marketId);
+				new UserAccount(userId, password, isEater, isGrower, isDriver, isFacebookUser, zip, marketId);
 		
 		UserAccountService userAccountService = new UserAccountService();
 		

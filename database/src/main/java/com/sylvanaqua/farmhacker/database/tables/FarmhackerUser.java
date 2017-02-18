@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FarmhackerUser extends TableImpl<FarmhackerUserRecord> {
 
-    private static final long serialVersionUID = 376675638;
+    private static final long serialVersionUID = 278232689;
 
     /**
      * The reference instance of <code>farmhacker.farmhacker_user</code>
@@ -52,7 +52,7 @@ public class FarmhackerUser extends TableImpl<FarmhackerUserRecord> {
     /**
      * The column <code>farmhacker.farmhacker_user.username</code>.
      */
-    public final TableField<FarmhackerUserRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false), this, "");
+    public final TableField<FarmhackerUserRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "");
 
     /**
      * The column <code>farmhacker.farmhacker_user.password</code>.
@@ -73,6 +73,11 @@ public class FarmhackerUser extends TableImpl<FarmhackerUserRecord> {
      * The column <code>farmhacker.farmhacker_user.is_grower</code>.
      */
     public final TableField<FarmhackerUserRecord, Integer> IS_GROWER = createField("is_grower", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>farmhacker.farmhacker_user.is_driver</code>.
+     */
+    public final TableField<FarmhackerUserRecord, Integer> IS_DRIVER = createField("is_driver", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>farmhacker.farmhacker_user.is_facebook_user</code>.

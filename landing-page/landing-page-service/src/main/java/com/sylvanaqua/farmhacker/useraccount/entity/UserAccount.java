@@ -20,6 +20,9 @@ public class UserAccount {
 	@XmlElement(name="is_grower")
 	private int isGrower;
 	
+	@XmlElement(name="is_driver")
+	private int isDriver;
+	
 	@XmlElement(name="is_facebook_user")
 	private int isFacebookUser;
 	
@@ -38,13 +41,14 @@ public class UserAccount {
 		this.password = password;
 	}
 	
-	public UserAccount(String userid, String password, int isEater, int isGrower,
+	public UserAccount(String userid, String password, int isEater, int isGrower, int isDriver,
 			           int isFacebookUser, int zip, int marketId) {
 		
 		this.userid = userid;
 		this.password = password;
 		this.isEater = isEater;
 		this.isGrower = isGrower;
+		this.isDriver = isDriver;
 		this.isFacebookUser = isFacebookUser;
 		this.zip = zip;
 		this.marketId = marketId;
@@ -58,6 +62,7 @@ public class UserAccount {
 			entryAsJSON.put("password", password);
 			entryAsJSON.put("is_eater", isEater);
 			entryAsJSON.put("is_grower", isGrower);
+			entryAsJSON.put("is_driver", isDriver);
 			entryAsJSON.put("is_facebook_user", isFacebookUser);
 			entryAsJSON.put("zip", zip);
 			entryAsJSON.put("market_id", marketId);
@@ -96,6 +101,14 @@ public class UserAccount {
 
 	public void setIsGrower(int isGrower) {
 		this.isGrower = isGrower;
+	}
+	
+	public int getIsDriver() {
+		return isDriver;
+	}
+
+	public void setIsDriver(int isDriver) {
+		this.isDriver = isDriver;
 	}
 
 	public int getIsFacebookUser() {

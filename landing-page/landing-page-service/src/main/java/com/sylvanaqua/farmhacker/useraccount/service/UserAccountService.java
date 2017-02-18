@@ -63,6 +63,7 @@ public class UserAccountService extends ServiceBase {
 	        					  FarmhackerUser.FARMHACKER_USER.PASSWORD,
 	        					  FarmhackerUser.FARMHACKER_USER.IS_EATER,
 	        					  FarmhackerUser.FARMHACKER_USER.IS_GROWER,
+	        					  FarmhackerUser.FARMHACKER_USER.IS_DRIVER,
 	        					  FarmhackerUser.FARMHACKER_USER.IS_FACEBOOK_USER,
 	        					  FarmhackerUser.FARMHACKER_USER.ZIP,
 	        					  FarmhackerUser.FARMHACKER_USER.MARKET_ID)
@@ -70,6 +71,7 @@ public class UserAccountService extends ServiceBase {
 	        				  accountInformation.getPassword(),
 	        				  accountInformation.getIsEater(), 
 	        				  accountInformation.getIsGrower(),
+	        				  accountInformation.getIsDriver(),
 	        				  accountInformation.getIsFacebookUser(),
 	        				  accountInformation.getZip(),
 	        				  accountInformation.getMarketId())
