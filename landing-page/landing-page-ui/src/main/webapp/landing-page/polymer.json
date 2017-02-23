@@ -6,7 +6,7 @@
   ],
   "sources": [
     "src/**/*",
-    "assets/images/**/*",
+    "assets/**/*",
     "bower.json"
   ]
 }
