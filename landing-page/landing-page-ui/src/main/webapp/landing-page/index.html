@@ -6,23 +6,17 @@
 
     <title>GreenMaven</title>
     <meta name="description" content="greenmaven description">
-    <style type="text/css">
-       .loading {
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: -500;
-          display: block;
-       }
-    </style>
 
-    <script src="/assets/js/polymerAppLoader.js"></script>
+    <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.ico"/>
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="/manifest.json">
+
+    <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="/src/greenmaven-app/greenmaven-app.html">
   </head>
-  <body onload="polymerLoader.loadPolymerApplication()">
-    <!-- Very simple loading screen for fast loading, maybe something like a svg image -->
-    <div id="loader" class="loading">
-      <img src="/assets/images/gears.svg" />
-    </div>
-</body>
+  <body>
+    <greenmaven-app></greenmaven-app>    
+  </body>
 </html>
