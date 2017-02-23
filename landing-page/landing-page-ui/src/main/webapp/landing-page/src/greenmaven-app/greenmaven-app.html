@@ -144,7 +144,7 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#about">About</a>
@@ -160,7 +160,7 @@
         </nav>
         </div>
 
-        <div class="jumbotron jumbotron-fluid jumbotron-top">
+        <div id="home" class="jumbotron jumbotron-fluid jumbotron-top">
         <div class="container title-container">
             <h1 class="display-3 header-text">GreenMaven</h1>
             <h3 class="display-5 subtitle-text">Your&nbsp;Farms&nbsp;at&nbsp;Your&nbsp;Fingertips.&reg;</h3>
@@ -290,6 +290,23 @@
 
   </template>
 
+
+  <script>
+    $(function() {
+      $('a[href*="#"]:not([href="#"])').click(function() {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+          var target = $(this.hash);
+          target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+          if (target.length) {
+            $('html, body').animate({
+              scrollTop: target.offset().top - $('#navbar').height()
+            }, 1000);
+            return false;
+          }
+        }
+      });
+    });
+  </script>
   <script>
     Polymer({
 
