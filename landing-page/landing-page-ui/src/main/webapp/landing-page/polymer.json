@@ -1,0 +1,12 @@
+{
+  "entrypoint": "index.html",
+  "shell": "filestoload.html",
+  "fragments": [
+    "src/greenmaven-app/greenmaven-app.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "assets/images/**/*",
+    "bower.json"
+  ]
+}
