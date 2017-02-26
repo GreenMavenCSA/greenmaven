@@ -23,7 +23,7 @@ If you catch bugs, etc. please file issues. Anyone is free to take a stab at sol
 
 ## Vision and Business Case
 
-Farmhacker helps the local food movement scale up by connecting growers and consumers via direct peer to peer exchange. Food buyers get easy access to all the growers in their community; the growers get access to a busy marketplace with low barriers to entry.
+GreenMaven helps the local food movement scale up by connecting growers and consumers via direct peer to peer exchange. Food buyers get easy access to all the growers in their community; the growers get access to a busy marketplace with low barriers to entry.
 
 A grower is traditionally connected to a customer either directly (on-farm sales, farmers markets, CSA), or via a food hub intermediary, or by restaurants and wholesalers. This traditional model comes with a number of problems for both parties, as well as for the future scalability of the local/beyond-organic food movement.
 
@@ -33,7 +33,7 @@ Buyer Problems: Buying local is a logistical nightmare compared to the convenien
 
 In sum, the current suite of vehicles connecting producers and consumers limits the ability of the local food movement to scale, because it's too difficult for both producers and consumers to enter (or persist in) the market.
 
-GreenMaven fills the gap left by traditional sales vehicles. The premise is simple: producers publish their inventory, consumers publish their grocery lists, and farmhacker works as a matchmaker. This can occur via direct search (e.g. a customer searching on a specific item to see what producers have what items, and when/where they can be procured), or via automated exchange (e.g. a customer enters a grocery list, allowing Farmhacker to pick producers based on pre-defined criteria and create a grocery shopping itinerary that's executed either by the customer himself or a third party who delivers.)
+GreenMaven fills the gap left by traditional sales vehicles. The premise is simple: producers publish their inventory, consumers publish their grocery lists, and GreenMaven works as a matchmaker. This can occur via direct search (e.g. a customer searching on a specific item to see what producers have what items, and when/where they can be procured), or via automated exchange (e.g. a customer enters a grocery list, allowing GreenMaven to pick producers based on pre-defined criteria and create a grocery shopping itinerary that's executed either by the customer himself or a third party who delivers.)
 
 The producer benefits from a larger pool of retail customers and a market that's active 24/7. She is able to sell at a larger volume but for near-retail prices, without losing direct connection to the customer. She can also limit her time spent at farmers markets and otherwise trying to secure sales.
 
