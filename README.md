@@ -1,5 +1,24 @@
 # GreenMaven
 
+## How to Contribute
+
+### Getting the Code
+1. Fork the repo and configure a remote (https://help.github.com/articles/configuring-a-remote-for-a-fork/
+2. Make sure you're synced with the remote (https://help.github.com/articles/syncing-a-fork/
+3. Make your edits in a new branch (pull from the remote often to stay synced) 
+5. Open a pull request when you're done.
+
+We've been both overwhelmed and humbled by the level of support we've received for this. Please be patient
+as we try to play catchup to onboard new developers/designers.
+
+### What Can I Work On?
+
+Request an invite to our Trello board here: https://trello.com/invite/b/g6wDKixj/3d6d7da071fccfcb64bd31b652d2b3fb/greenmaven
+Holler at us? Shoot an email to chris@sylvanaqua.com and we'll get you a Slack invite (we'll install Slackin... someday)
+Check the Wiki for information about the technology stack, dev environment setup, etc.
+
+If you catch bugs, etc. please file issues. Anyone is free to take a stab as solving any existing problems found there :-)
+
 ## Vision and Business Case
 
 Farmhacker helps the local food movement scale up by connecting growers and consumers via direct peer to peer exchange. Food buyers get easy access to all the growers in their community; the growers get access to a busy marketplace with low barriers to entry.
