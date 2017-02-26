@@ -5,7 +5,7 @@
 ### Getting the Code
 1. Fork the repo and [configure a remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/)
 2. Make sure you're [synced with the remote](https://help.github.com/articles/syncing-a-fork/)
-3. Make your edits in a new branch (pull from the remote often to stay synced) 
+3. Make your edits in a new branch (branch from master for issue fixes, dev for new features) 
 5. Open a pull request when you're done.
 
 We've been both overwhelmed and humbled by the level of support we've received for this. Please be patient
@@ -21,7 +21,7 @@ Check the Wiki for information about the technology stack, dev environment setup
 
 If you catch bugs, etc. please file [issues](https://github.com/GreenMavenCSA/greenmaven/issues). Anyone is free to take a stab at solving any existing problems found there :-)
 
-## Vision and Business Case
+## GreenMaven Vision and Business Case
 
 GreenMaven helps the local food movement scale up by connecting growers and consumers via direct peer to peer exchange. Food buyers get easy access to all the growers in their community; the growers get access to a busy marketplace with low barriers to entry.
 
