@@ -3,8 +3,8 @@
 ## How to Contribute
 
 ### Getting the Code
-1. Fork the repo and configure a remote (https://help.github.com/articles/configuring-a-remote-for-a-fork/
-2. Make sure you're synced with the remote (https://help.github.com/articles/syncing-a-fork/
+1. Fork the repo and configure a remote (https://help.github.com/articles/configuring-a-remote-for-a-fork/)
+2. Make sure you're synced with the remote (https://help.github.com/articles/syncing-a-fork/)
 3. Make your edits in a new branch (pull from the remote often to stay synced) 
 5. Open a pull request when you're done.
 
@@ -14,10 +14,12 @@ as we try to play catchup to onboard new developers/designers.
 ### What Can I Work On?
 
 Request an invite to our Trello board here: https://trello.com/invite/b/g6wDKixj/3d6d7da071fccfcb64bd31b652d2b3fb/greenmaven  
+
 Holler at us? Shoot an email to chris@sylvanaqua.com and we'll get you a Slack invite (we'll install Slackin... someday)  
+
 Check the Wiki for information about the technology stack, dev environment setup, etc.
 
-If you catch bugs, etc. please file issues. Anyone is free to take a stab as solving any existing problems found there :-)
+If you catch bugs, etc. please file issues. Anyone is free to take a stab at solving any existing problems found there :-)
 
 ## Vision and Business Case
 
