@@ -13,8 +13,8 @@ as we try to play catchup to onboard new developers/designers.
 
 ### What Can I Work On?
 
-Request an invite to our Trello board here: https://trello.com/invite/b/g6wDKixj/3d6d7da071fccfcb64bd31b652d2b3fb/greenmaven
-Holler at us? Shoot an email to chris@sylvanaqua.com and we'll get you a Slack invite (we'll install Slackin... someday)
+Request an invite to our Trello board here: https://trello.com/invite/b/g6wDKixj/3d6d7da071fccfcb64bd31b652d2b3fb/greenmaven  
+Holler at us? Shoot an email to chris@sylvanaqua.com and we'll get you a Slack invite (we'll install Slackin... someday)  
 Check the Wiki for information about the technology stack, dev environment setup, etc.
 
 If you catch bugs, etc. please file issues. Anyone is free to take a stab as solving any existing problems found there :-)
