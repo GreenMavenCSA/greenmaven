@@ -3,7 +3,7 @@
 ## How to Contribute
 
 ### Getting the Code
-1. Fork the repo and configure a [remote] https://help.github.com/articles/configuring-a-remote-for-a-fork/)
+1. Fork the repo and configure a [remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/)
 2. Make sure you're synced with the remote (https://help.github.com/articles/syncing-a-fork/)
 3. Make your edits in a new branch (pull from the remote often to stay synced) 
 5. Open a pull request when you're done.
