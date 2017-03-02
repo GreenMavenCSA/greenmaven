@@ -3,10 +3,3 @@
               background-size: cover;
               min-height: 500px;
 }
-
-.jumbotron-2 {
-			  background-image:url(../images/secondBanner.jpg);
-              background-size: cover;
-              padding-top:12%;
-              padding-bottom: 20%;
-}
