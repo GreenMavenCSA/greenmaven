@@ -11,11 +11,16 @@
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../../bower_components/gold-zip-input/gold-zip-input.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
 <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Rokkitt:200" rel="stylesheet">
 
 <dom-module id="greenmaven-app">
   <template>
@@ -24,31 +29,34 @@
         display: block;
       }
 
+      a:link { color: #ff5a5f; }
+      a:hover { color: #ffffff; }
+      a:visited { color: #ff5a5f; }
+      a:active { color: #ffffff; }
+
+      .navTitle { color: #ffffff; }
+
       .navbar-container {
         position: fixed; 
         right: 0; 
         left: 0; 
         z-index: 1030; 
-        top: 0
+        top: 0;
       }
 
-      .email-link { color: #ff5a5f !important }
+      .navbar { height : 90px !important; }
+
+      .jumbotron-top { padding-bottom: 225px; }
 
       .mini-shadow { box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
 
       .main-text { font-family: 'Titillium Web', sans-serif; }
 
-      .title-font { font-family: 'Sansita', sans-serif; }
+      .title-font { font-family: 'Sansita', sans-serif; font-size: 2.0em; color: #ffffff;}
 
-      .header-text { font-family: 'Sansita', sans-serif; color:#FFFFFF; }
+      .header-text { font-family: 'Sanchez', serif; color:#FFFFFF; font-size: 2.2em; letter-spacing: 0.03em}
 
-      .subtitle-text { font-family: 'Dancing Script', cursive; color:#fdc4c6; padding-left:75px }
-
-      .title-container {  margin-top: 50px }
-
-      .form-container-row { margin-top:5px; }
-
-      .form-card { background: #292b2c; color: #fefefe; font-family: 'Titillium Web', sans-serif; }
+      .subtitle-container { color: #FFFFFF; font-size: 1.5em; font-family: 'Rokkitt', serif; line-height: 1.2; }
 
       .about-page-header { font-family: 'Sansita', sans-serif; color: #ff5a5f }
 
@@ -60,21 +68,44 @@
 
       .footer-text { padding-top: 20px; font-size:1.0em; color: #fefefe; }
 
-      .bigSearchBox {
-        --primary-text-color: #ff5a5f;
-        --paper-input-container-input: {font-size: 40px; font-color:#FFFFFF;};
-        --paper-input-container-focus-color: --secondary-text-color;
+      .disclaimer {
+        color: #FFFFFF; font-size: 1.0  em; font-family: 'Rokkitt', serif;
       }
 
-      .emailBox {
-        --primary-text-color: #ff5a5f;
-        --paper-input-container-input: {font-size: 22px; font-color:#FFFFFF;};
-        --paper-input-container-focus-color: --secondary-text-color;
+      .inputContainer {
+        border: 1px #FFFFFF solid;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background: rgba(0, 10, 0, 0.5);
+        border-radius: 8px;
       }
+
+      .buttonContainer {
+        border: 1px #000000 solid;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background-color: #fdc4c6;
+        border-radius: 10px;
+        opacity: 0.95;
+      }
+
 
       .quickEmailBox {
-        --primary-text-color: #ff5a5f;
+        --primary-text-color: #FFFFFF;
         --paper-input-container-focus-color: #FFFFFF;
+        --paper-input-container-color: #fdc4c6;
+        color:#FFFFFF;
+      }
+
+      .quickZipBox {
+        --primary-text-color: #FFFFFF;
+        --paper-input-container-focus-color: #FFFFFF;
+        --paper-input-container-color: #fdc4c6;
+        color:#FFFFFF;
       }
 
       .quickCheckbox {
@@ -89,28 +120,24 @@
         --paper-checkbox-margin: 8px 16px 8px 0;
       }
 
-      .quickIcon {
-        --iron-icon-fill-color: #fdc4c6;
-        padding-right: 0.5em;
+      .join_button {
+        color: #000000; width:100%; height:100%;
       }
 
-      .littleIcon {
-        --iron-icon-height: 30px;
-        --iron-icon-width: 30px;
-        --iron-icon-fill-color: #ff5a5f;;
+      .confirmation_container {
+        display:block;
+      }
+
+      .confirmation_column {
+        color:#fefefe; border-top: solid 1px #ff5a5f; padding-top:20px;
       }
 
       paper-checkbox {
         font-family: 'Sansita', sans-serif;
         --paper-checkbox-checked-color: #ff5a5f;
-      }
-
-      paper-checkbox .subtitle {
-          font-family: 'Titillium Web', sans-serif;
-          display: block;
-          font-size: 0.8em;
-          margin-top: 2px;
-          max-width: 150px;
+        --paper-checkbox-label: { color: #FFFFFF; };
+        --paper-checkbox-unchecked-color: #FFFFFF;
+        --paper-checkbox-label-checked-color: #FFFFFF;
       }
     </style>
 
@@ -136,82 +163,97 @@
     </paper-dialog>
 
     <div id="navbar" class="navbar-container">
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse mini-shadow">
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand title-font" href="#">GreenMaven</a>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item active">
-                <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#about">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="https://www.patreon.com/farmermang">Support</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link email-link" href="mailto:chris@sylvanaqua.com">Questions? chris@sylvanaqua.com</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        </div>
+      <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse mini-shadow">
+        <span class="navbar-brand title-font" href="#">GreenMaven</span>
+      </nav>
+    </div>
 
-        <div id="home" class="jumbotron jumbotron-fluid jumbotron-top">
-        <div class="container title-container">
-            <h1 class="display-3 header-text">GreenMaven</h1>
-            <h3 class="display-5 subtitle-text">Your&nbsp;Farms&nbsp;at&nbsp;Your&nbsp;Fingertips.&reg;</h3>
-        </div>
+    <div id="home" class="jumbotron jumbotron-fluid jumbotron-top">
 
         <div class="container-fluid">
-          <div class="row" style="margin-top:50px;">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-10">
-              <div class="card mini-shadow">
-                <div class="card-block">
-                  <paper-input-location id="locationBox" class="bigSearchBox" label="Enter your address to find your local marketplace" maps-api-key="AIzaSyBMjBxBM8PUa5T_kezydz2Q1Slev1hn19g" on-place-changed="checkAddress" on-keyup="checkAddress">
-                  </paper-input-location>
-                </div>
+          
+            <div class="row" style="margin-top:120px;" >
+              <div class="col-md-12 title-container text-center">
+                <span class="header-text">Shop all the Farms</span>
               </div>
             </div>
-            <div class="col-md-1">&nbsp;</div>
-          </div>
-          <iron-collapse id="addressCollapse">
-            <div class="row form-container-row">
-               <div class="col-md-10 offset-md-1">
-                <div class="card form-card">
-                  <div class="card-block">
-                      <iron-collapse id="eligibleCollapse">
-                        Based on your zip code, you are eligible to join the {{marketName}} market!<br /><br />
-                        Currenty we have {{growersInMarket}} growers registered to serve {{eatersInMarket}} customers in this market.
-                        The more folks that sign up, the sooner we can get started! Add yourself to the ranks of
-                        growers, eaters, and/or drivers by addingyour email and interests with the form below.
-                        <br /><br />
-                      </iron-collapse>
-                      <iron-collapse id="ineligibleCollapse">
-                        Your zip code falls outside our pilot project area. However, it'll help us out a lot to gauge
-                        interest outside of the Charlottesville area. Please fill out the form to the right so we
-                        can keep track of interest in GreenMaven in your area!
-                        <br /><br />
-                      </iron-collapse>
+            <div class="row" style="margin-top:10px;">
+              <div class="col-md-6 offset-md-3 text-center subtitle-container">
+                <span>
+                  Good food is growing all around you - from patio gardens to sweeping
+                  pasture farms - right this minute. Let's go get it.
+                </span>
+              </div>
+            </div>
+            <div id="formContainer">
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-md-3 offset-md-3">
+                  <div class="inputContainer">
                       <gold-email-input id="quickEmail" class="quickEmailBox" 
-                                        label="Email address" required 
-                                        style="color:#FFFFFF" on-keydown="checkForEnterFromEmailBox">
-                        <iron-icon class="quickIcon" icon="communication:email" prefix></iron-icon>
+                                        label="Email Address" required 
+                                        value="{{emailAddress}}" >
                       </gold-email-input>
-                      <paper-checkbox id="growerCheckbox" class="quickCheckbox"><strong>Grower</strong></paper-checkbox>&nbsp;&nbsp;
-                      <paper-checkbox id="eaterCheckbox" class="quickCheckbox"><strong>Eater/Buyer</strong></paper-checkbox>&nbsp;&nbsp;
-                      <paper-checkbox id="driverCheckbox" class="quickCheckbox"><strong>Driver</strong></paper-checkbox><br />
-                      <paper-button on-tap="registerUser"><iron-icon icon="done"></iron-icon>Done</paper-button>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="inputContainer">
+                      <gold-zip-input id="quickZip" class="quickZipBox" 
+                                        label="Zip Code (5 digit)" required 
+                                        on-keyup="checkZip"
+                                        value="{{postalCode}}">
+                      </gold-zip-input>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-md-6 offset-md-3 text-center">
+                  <paper-checkbox id="eaterCheckbox" checked={{userIsEater}}>Buyer</paper-checkbox>&nbsp;&nbsp;
+                  <paper-checkbox id="growerCheckbox" checked={{userIsGrower}}>Grower</paper-checkbox>&nbsp;&nbsp;
+                  <paper-checkbox id="driverCheckbox" checked={{userIsDriver}}>Driver</paper-checkbox>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-md-6 offset-md-3 text-center disclaimer">
+                  <span>Your email address will never be given away or sold.</span>
+                  <div class="buttonContainer text-center">
+                    <paper-button class="join_button" on-click="registerUser">
+                      <iron-icon icon="check" style="color:#ff5a5f"></iron-icon>&nbsp;&nbsp;
+                      JOIN THE MOVEMENT
+                    </paper-button>
                   </div>
                 </div>
               </div>
             </div>
-          </iron-collapse>
+            <div id="confirmationContainer" class="confirmation_container">
+              <div class="row" style="margin-top: 20px;">
+                 <div class="col-md-6 offset-md-3 text-center confirmation_column">
+                    <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fwww.greenmaven.io&layout=button_count&mobile_iframe=true&width=69&height=20&appId" width="100" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                    <br /><br />
+                    <template is="dom-if" if="{{marketFound(marketId)}}">
+                      Thanks for signing up! You'll be assigned to our {{marketName}} market, which
+                      currently has {{growersInMarket}} growers and {{eatersInMarket}} buyers registered.
+                    </template>
+                    <template is="dom-if" if="{{marketNotFound(marketId)}}">
+                      Thanks for signing up! Your zip code falls outside of our pilot area in
+                      Charlottesville, but we're going to retain your info so we can gauge interest
+                      in your area and decide where to go next.
+                    </template>
+                    Please encourage your friends and family to sign up; the more people we get
+                    signed up, the sooner we can get started!
+                    <br /><br />
+                    We'll be in touch! In the meantime:
+                    <br /><br />
+                    <ul class="text-left">
+                      <li><a href="#about">Read a little more about GreenMaven</a>
+                      <li><a href="http://www.patreon.com/farmermang">Make a donation</a> to the project!</li>
+                      <li>Wanna write code, help us design, do marketing, etc.? Visit our <a href="https://github.com/GreenMavenCSA/greenmaven">GitHub</a> or email chris@sylvanaqua.com</li>
+                    </ul>
+                    
+                 </div>
+              </div>
+            </div>
         </div>
+      </div>
       </div>
 
       <div id="about" class="container">
@@ -233,7 +275,7 @@
                   Growers and eaters are not just the stars of the show; they run the show. GreenMaven is little more
                   than math running in the background helping everyone communicate effectively.
                   <br /><br /> 
-                  GreenMaven was conceived, designed, and built by farmers. <a href="https://medium.com/@cnative100/breaking-the-wheel-greenmaven-food-hubs-and-the-heartbreaking-story-of-relay-foods-95f46cbcef43#.4ff73u4d6" style="color:#ff5a5f">Here's a 
+                  GreenMaven was conceived, designed, and built by farmers. <a href="https://medium.com/@cnative100/breaking-the-wheel-greenmaven-food-hubs-and-the-heartbreaking-story-of-relay-foods-95f46cbcef43#.4ff73u4d6">Here's a 
                   little more detail about GreenMaven's conception and mission</a>, if you're interested.
                   <br /><br />
               </div>
@@ -280,13 +322,12 @@
 
       <iron-ajax
         id="createAccountService"
-        params="{{getAccountCreationParams(emailAddress, userIsGrower, userIsEater, userIsDriver, facebookUser, postalCode, marketId)}}"
+        params="{{accountCreationParams}}"
         handle-as="json"
         on-response="handleAccountCreateResponse">
       </iron-ajax>
 
   </template>
-
 
   <script>
     $(function() {
@@ -309,26 +350,56 @@
 
       is: 'greenmaven-app',
 
+      behaviors: [
+        Polymer.NeonAnimationRunnerBehavior
+      ],
+
       properties: {
-        postalCode: '',
-        marketId: -1,
-        marketName: '',
-        growersInMarket: 0,
-        eatersInMarket: 0,
-        emailAddress: '',
-        userIsGrower: 0,
-        userIsEater: 0,
-        userIsDriver: 0,
-        facebookUser: 0,
+        signupDone: {type: Boolean, value: false},
+        postalCode: {type: String, value: ''},
+        marketId: {type: Number, value: -1, notify: true},
+        marketName: {type: String, value: ''},
+        growersInMarket: {type: Number, value: 0},
+        eatersInMarket: {type: Number, value: 0},
+        emailAddress: {type: String, value: ''},
+        userIsGrower: {type: Boolean, value: false},
+        userIsEater: {type: Boolean, value: false},
+        userIsDriver: {type: Boolean, value: false},
+        facebookUser: {type: Boolean, value: false},
 
         registerConfirmText: { type: String, value: "Got it! You're all set!" },
         emailDuplicateMessageText: { type: String, value: "Looks like this email's already been registered :-)" },
         registerValidationFailedText: { type: String, value: "We'll need you to enter a valid email address and check at least one interest: Grower, Eater, or Driver. Thanks!" },
-        closeButtonText: { type: String, value: "Close" }
+        closeButtonText: { type: String, value: "Close" },
+
+        accountCreationParams: {
+          type: String,
+          computed: 'getAccountCreationParams(emailAddress, userIsGrower, userIsEater, userIsDriver, facebookUser, postalCode, marketId)'
+        },
+
+        animationConfig: {
+          value: function() {
+            return {
+              'formExit': {
+                name: 'fade-out-animation',
+                node: this.$.formContainer
+              },
+              'confirmationEnter': {
+                name: 'fade-in-animation',
+                node: this.$.confirmationContainer
+              }
+            }
+          }
+        }
+      },
+
+      listeners: {
+        'neon-animation-finish': '_onNeonAnimationFinish'
       },
 
       // Page events ----------------------------------------------------
       ready: function () {
+          this.$.confirmationContainer.style.display = 'none';
           this.$.getMarketInfoDatasource.url = appProperties.userAccountServiceGetGrowersEatersServicePath;
           this.$.createAccountService.url = appProperties.userAccountServiceCreateAccountServicePath;
       },
@@ -354,85 +425,42 @@
       // AJAX service response handlers ---------------------------------
       handleGetResponse: function (data) {
           var userTally = data.detail.response;
-          this.marketId = userTally.market_id;
+          this.set("marketId", userTally.market_id);
           this.marketName = userTally.market_name;
           this.growersInMarket = userTally.num_growers;
           this.eatersInMarket = userTally.num_eaters;
-
-          this.toggleSignupForm();
-
-          if(this.marketId == -1){
-            if(!this.$.ineligibleCollapse.opened){
-              this.$.ineligibleCollapse.toggle();
-            }
-            if(this.$.eligibleCollapse.opened){
-              this.$.eligibleCollapse.toggle();
-            }
-          }
-          else{
-            if(!this.$.eligibleCollapse.opened){
-              this.$.eligibleCollapse.toggle();
-            }
-            if(this.$.ineligibleCollapse.opened){
-              this.$.ineligibleCollapse.toggle();
-            }
-          }
           
       },
+
       handleAccountCreateResponse: function(data){
 
+        this.$.getMarketInfoDatasource.generateRequest();
         var response = data.detail.response;
 
         if(response.result == 0){
-          this.$.modalConfirm.open();
-          this.resetForm();
-          this.resetProperties();
-          this.$.addressCollapse.toggle();
+          // TODO: Toggle on the confirmation div instead of using the dialog
+          //this.$.modalConfirm.open();
+          //this.resetForm();
+          //this.resetProperties();
+          this.set("signupDone", true);
+          this.playAnimation('formExit');
         }
         else{
-          this.$.modelEmailExists.open();
+          this.$.modelEmailExists.open(); 
         }
         
       },
       
       // Event Handler functions ----------------------------------------
-      checkAddress: function(e) {
-
-        // If the search box isn't a valid address and the signup form is open, close it
-        if(!this.$.locationBox.validatePlace() &&
-           this.$.addressCollapse.opened){
-          this.toggleSignupForm();
-        }
-
-        // If the search box is valid, close the signup form if it's already open. Then
-        // call the webservice.
-        if(this.$.locationBox.validatePlace()) 
-        {
-          if(this.$.addressCollapse.opened){
-            this.toggleSignupForm();
-          }
-
-          this.postalCode = this.$.locationBox.postalCode;
-          this.$.getMarketInfoDatasource.generateRequest();
-        }
-
-        // If the search box isn't a valid address and the signup form is closed,
-        // don't do anything.
-      },
-      checkForEnterFromEmailBox: function(e){
-        if(e.keyCode === 13) {
-          this.registerUser();
-        }
-      },
       registerUser: function(){
 
         if(this.validate()){
 
-          this.emailAddress = this.$.quickEmail.value;
           this.userIsGrower = this.$.growerCheckbox.checked ? 1 : 0;
           this.userIsEater = this.$.eaterCheckbox.checked ? 1 : 0;
           this.userIsDriver = this.$.driverCheckbox.checked ? 1 : 0;
           this.facebookUser = 0;
+
           this.$.createAccountService.generateRequest();
         }
         else{
@@ -441,28 +469,33 @@
       },
       
       // Validation methods -----------------------------------------------------
+      checkZip: function(){
+        if(this.$.quickZip.validate()){
+          this.$.getMarketInfoDatasource.generateRequest();
+        }
+      },
+
       validate: function(){
 
         var emailValid = this.$.quickEmail.validate();
+        var zipValid = this.$.quickZip.validate();
 
         var checkboxesValid = (this.$.growerCheckbox.checked || 
                                this.$.eaterCheckbox.checked ||
                                this.$.driverCheckbox.checked);
 
-        return (emailValid && checkboxesValid);
+        return (emailValid && zipValid && checkboxesValid);
       },
 
       // Form and UI Helpers ----------------------------------------------------
       resetForm: function(){
         this.$.quickEmail.value = '';
+        this.$.quickZip.value= '';
         this.$.growerCheckbox.checked = false;
         this.$.eaterCheckbox.checked = false;
         this.$.driverCheckbox.checked = false;
       },
-      toggleSignupForm: function(){
-        this.resetForm();
-        this.$.addressCollapse.toggle();
-      },
+
       resetProperties: function() {
         this.postalCode = '';
         this.marketId = -1;
@@ -475,6 +508,28 @@
         this.userIsDriver = 0;
         this.facebookUser = 0;
       },
+
+      _onNeonAnimationFinish: function() {
+        if (this.signupDone) {
+          this.$.formContainer.style.display = 'none';
+          this.set('signupDone', false);
+
+          this.$.confirmationContainer.style.opacity = 0.0;
+          this.$.confirmationContainer.style.display = 'block';
+          this.playAnimation('confirmationEnter');
+        }
+        else{
+          this.$.confirmationContainer.style.opacity = 1.0;
+        }
+      },
+
+      marketFound: function (pMarketId) {
+        return pMarketId != -1;
+      },
+
+      marketNotFound: function (pMarketId) {
+        return !(this.marketFound(pMarketId));
+      }
     });
 
 
