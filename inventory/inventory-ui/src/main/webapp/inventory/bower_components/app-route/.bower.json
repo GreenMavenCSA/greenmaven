@@ -38,7 +38,7 @@
     "tag": "v0.9.3",
     "commit": "8a95fb29bf2bdf7befbc3f58154d33631b97d8ef"
   },
-  "_source": "git://github.com/PolymerElements/app-route.git",
+  "_source": "https://github.com/PolymerElements/app-route.git",
   "_target": "^0.9.0",
   "_originalSource": "PolymerElements/app-route"
 }

@@ -1,8 +1,8 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/my-farm.html",
   "fragments": [
-    "src/my-view1.html",
+    "src/inventory.html",
     "src/my-view2.html",
     "src/my-view3.html",
     "src/my-view404.html"
