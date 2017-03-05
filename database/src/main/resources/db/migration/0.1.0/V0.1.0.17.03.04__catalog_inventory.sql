@@ -1,0 +1,1 @@
+ALTER TABLE catalog ADD COLUMN units_available INT DEFAULT 0 NOT NULL;

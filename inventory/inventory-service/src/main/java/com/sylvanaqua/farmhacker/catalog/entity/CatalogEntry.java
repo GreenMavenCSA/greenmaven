@@ -19,6 +19,9 @@ public class CatalogEntry {
 	
 	@XmlElement(name="wholesalePrice")
 	private double wholesalePrice;
+
+	@XmlElement(name="unitsAvailable")
+	private int unitsAvailable;
 	
 	@Override
 	public String toString(){
@@ -28,6 +31,7 @@ public class CatalogEntry {
 			entryAsJSON.put("name", name);;
 			entryAsJSON.put("retailPrice", retailPrice);
 			entryAsJSON.put("wholesalePrice", wholesalePrice);
+			entryAsJSON.put("unitsAvailable", unitsAvailable);
 			
 			return entryAsJSON.toString();
 		}
@@ -37,11 +41,12 @@ public class CatalogEntry {
 	}
 	
 	public CatalogEntry(String category, String name, 
-			            double retailPrice, double wholesalePrice){
+			            double retailPrice, double wholesalePrice, int unitsAvailable){
 		this.category = category;
 		this.name = name;
 		this.retailPrice = retailPrice;
 		this.wholesalePrice = wholesalePrice;
+		this.unitsAvailable = unitsAvailable;
 	}
 	
 	public String getCategory() {
@@ -53,6 +58,7 @@ public class CatalogEntry {
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -73,5 +79,12 @@ public class CatalogEntry {
 		this.wholesalePrice = wholesalePrice;
 	}
 	
+	public int getUnitsAvailable() {
+		return unitsAvailable;
+	}
+
+	public void setUnitsAvailable(int unitsAvailable){
+		this.unitsAvailable = unitsAvailable;
+	}
 	
 }
