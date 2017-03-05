@@ -110,7 +110,8 @@ public class CatalogService extends ServiceBase {
         	for(CatalogRecord result : results){
         		CatalogEntry catalogEntry = 
         				new CatalogEntry(result.getCategory(), result.getName(), 
-        						         result.getRetailPrice(), result.getWholesalePrice());
+        						         result.getRetailPrice(), result.getWholesalePrice(),
+        						         result.getUnitsAvailable());
         		
         		searchResultsAsTransferObjects.add(catalogEntry);
         	}

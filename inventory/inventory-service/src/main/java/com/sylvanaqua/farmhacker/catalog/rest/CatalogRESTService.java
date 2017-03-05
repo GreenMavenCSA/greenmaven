@@ -41,7 +41,7 @@ public class CatalogRESTService extends RESTServiceBase {
 		
 		CatalogEntry catalogEntry = 
 				new CatalogEntry(category, name, Double.parseDouble(retailPrice),
-						         Double.parseDouble(wholesalePrice));
+						         Double.parseDouble(wholesalePrice), 0);
 		
 		CatalogService catalogService = new CatalogService();
 		
