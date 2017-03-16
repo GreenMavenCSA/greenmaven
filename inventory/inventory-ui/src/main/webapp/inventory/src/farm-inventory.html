@@ -43,7 +43,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <paper-dialog id="modalConfirm">
+    <paper-dialog id="modelInventoryConfirm">
+      <p>Saved with code: {{inventoryCode}}</p>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Close</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="modalCatalogConfirm">
       <p>Saved. Looks delicious :-)</p>
       <div class="buttons">
         <paper-button dialog-confirm autofocus>Close</paper-button>
@@ -93,16 +100,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             <span style="color:#000000; font-size: 0.8em">{{item.category}}</span>
                         </td>
                         <td style="width:20%">
-                          <paper-button id="editCatalogItem" style="float:right;">
-                            <iron-icon icon="editor:mode-edit"></iron-icon>
+                          <paper-button id="{{getCatalogEditButtonId(item.id)}}" style="float:right;" on-click="toggleItemEdit">
+                            <iron-icon id={{getCatalogEditFormToggleIconId(item.id)}} icon="add"></iron-icon>
                           </paper-button>
                         </td>
                       </tr>
                     </table>
                   </paper-card>
+                  <iron-collapse id="{{getCatalogCollapseId(item.id)}}">
+                    <paper-card style="width:100%">
+                      <div style="padding:10px">
+                         <form is="iron-form" method="get" action="/" id="{{getCatalogEditFormId(item.id)}}">
+                            Add {{item.name}} to inventory</strong>)
+                            <paper-input id="{{getInventoryInputId(item.id)}}" label="Item weight" required auto-validate pattern="[+-]?[0-9]{1,3}(?:,?[0-9]{3})*\.[0-9]{1,4}" error-message="Enter number with 1 to 4 decimal places"></paper-input>
+                            <paper-button id="{{getInventoryFormButtonId(item.id)}}" on-click="saveInventoryItem">
+                                <iron-icon icon="save"></iron-icon>Save
+                            </paper-button>
+                         </form>
+                      </div>
+                    </paper-card>
+                  </iron-collapse>
                   <br />
               </template>
-            </table>
           </div>
 
       </table>
@@ -122,6 +141,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-response="handlePutResponse">
     </iron-ajax>
 
+    <iron-ajax
+        id="inventoryPutDatasource"
+        handle-as="json"
+        on-response="handleInventoryPutResponse">
+    </iron-ajax>
+
   </template>
 
   <script>
@@ -134,19 +159,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
 
           searchString: 'all',
+          catalogId: '',
           catalogItemCategory: '',
           catalogItemName: '',
           catalogItemRetailPrice: '',
-          catalogItemWholesalePrice: ''
-          
+          catalogItemWholesalePrice: '',
+          inventoryMeasure: '',
+          inventoryCode: {
+            value: '',
+            reflectToAttribute: true
+          }
       },
+
+      //-------------------------------------------------------------------------
+      // Page events
+      //-------------------------------------------------------------------------
       ready: function () {
           this.$.catalogGetDatasource.url = appProperties.inventoryServiceGetCatalogEntriesServicePath;
           this.$.catalogPutDatasource.url = appProperties.inventoryServiceCreateCatalogEntryServicePath;
+          this.$.inventoryPutDatasource.url = appProperties.inventoryCreateInventoryItemServicePath;
 
           this.searchString = 'all';
           this.$.catalogGetDatasource.generateRequest();
       },
+
+      //-------------------------------------------------------------------------
+      // AJAX Event Handlers
+      //-------------------------------------------------------------------------
       handleGetResponse: function (data) {
           this.categories = data.detail.response;
       },
@@ -160,34 +199,63 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.searchString = this.catalogItemName;
             this.$.catalogGetDatasource.generateRequest();
             this.clearEntryForm();
-            this.$.modalConfirm.open();
+            this.$.modalCatalogConfirm.open();
           }
           
       },
-      updateCatalogView: function () {
-          var currValue = this.$.searchString.value;
-          this.searchString = currValue;
-          this.$.catalogGetDatasource.generateRequest();
+      handleInventoryPutResponse: function (data) {
+        var response = data.detail.response;
+
+        if(response.result != 0){
+          // Some kind of error handling here
+        }
+        else {
+          this.inventoryCode = response.code;
+          var formCollapseTarget = this.$$("#collapse_" + this.catalogId);
+          var formCollapseIcon = this.$$("#editIcon_" + this.catalogId);
+
+          formCollapseTarget.toggle();
+          formCollapseIcon.icon = 'add';
+
+          this.$.modelInventoryConfirm.open();
+        }
       },
+
+      //-------------------------------------------------------------------------
+      // AJAX Parameter Bindings
+      //-------------------------------------------------------------------------
       getCatalogReadParams: function(pSearchString){
           return {searchString: pSearchString.trim()};
       },
-      getCatalogWriteParams: function(pCatalogItemCategory, pCatalogItemName, pCatalogItemRetailPrice, pCatalogItemWholesalePrice){
+      getCatalogWriteParams: function(pCatalogItemCategory, pCatalogItemName, 
+                                      pCatalogItemRetailPrice, pCatalogItemWholesalePrice){
           return {category: pCatalogItemCategory,
                   name: pCatalogItemName,
                   retailPrice: pCatalogItemRetailPrice,
                   wholesalePrice: pCatalogItemWholesalePrice};
       },
-      toggle: function() {
-        this.$.collapse.toggle();
-
-        if(this.$.addCatalogButton.icon == "add"){
-          this.$.addCatalogButton.icon = "close";
-        }
-        else{
-          this.$.addCatalogButton.icon = "add";
-        }
+      getInventoryWriteParams: function(pCatalogId, pMeasure){
+          return {catalog_id: pCatalogId,
+                  measure: pMeasure};
       },
+      
+      //-------------------------------------------------------------------------
+      // Form validators
+      //-------------------------------------------------------------------------
+      validate: function() {
+        return (this.$.itemCategory.validate() &&  this.$.itemName.validate() &&
+                this.$.itemRetailPrice.validate() && this.$.itemWholeSalePrice.validate())
+      },
+
+      //-------------------------------------------------------------------------
+      // Button/element event handlers
+      //-------------------------------------------------------------------------
+      updateCatalogView: function () {
+          var currValue = this.$.searchString.value;
+          this.searchString = currValue;
+          this.$.catalogGetDatasource.generateRequest();
+      },
+
       saveCatalogItem: function (){
         if(this.validate()){
           this.catalogItemCategory = this.$.itemCategory.value;
@@ -200,18 +268,76 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
       },
-      validate: function() {
-        return (this.$.itemCategory.validate() &&  this.$.itemName.validate() &&
-           this.$.itemRetailPrice.validate() && this.$.itemWholeSalePrice.validate())
-
-      },
+      
       clearEntryForm: function() {
          this.$.catalogItemForm.reset();
       },
+
+      toggleItemEdit: function(e){
+        var formCollapseTarget = this.$$("#collapse_" + e.currentTarget.id.substring(5));
+        var formCollapseIcon = this.$$("#editIcon_" + e.currentTarget.id.substring(5));
+
+        if(formCollapseIcon.icon == 'add'){
+            formCollapseIcon.icon = "close";
+        }
+        else{
+            formCollapseIcon.icon = "add";
+        }
+
+        formCollapseTarget.toggle();
+      },
+
+      saveInventoryItem: function(e) {
+        this.catalogId = e.currentTarget.id.substring(8);
+        this.inventoryMeasure = this.$$("#invInput_" + this.catalogId).value;
+
+        this.$.inventoryPutDatasource.params = this.getInventoryWriteParams(this.catalogId, this.inventoryMeasure);
+        this.$.inventoryPutDatasource.generateRequest();
+
+      },
+
+      //-------------------------------------------------------------------------
+      // ID Generators for Dynamic Elements
+      //-------------------------------------------------------------------------
+      getCatalogEditFormId: function(categoryId){
+        return "editForm_" + categoryId;
+      },
+      getCatalogEditFormToggleIconId: function(categoryId){
+        return "editIcon_" + categoryId;
+      },
+      getInventoryInputId: function(categoryId){
+        return "invInput_" + categoryId;
+      },
+      getInventoryFormButtonId: function(categoryId){
+        return "invSave_" + categoryId;
+      },
+      getCatalogCollapseId: function(categoryId) {
+        return "collapse_" + categoryId;
+      },
+      getCatalogEditButtonId: function(categoryId){
+        return "edit_" + categoryId;
+      },
+
+      //-------------------------------------------------------------------------
+      // Utility methods and helpers
+      //-------------------------------------------------------------------------
       formatCurrencyDecimal: function(inputNumber) {
         return inputNumber.toFixed(2);
+      },
+      toggle: function() {
+        this.$.collapse.toggle();
+
+        if(this.$.addCatalogButton.icon == "add"){
+          this.$.addCatalogButton.icon = "close";
+        }
+        else{
+          this.$.addCatalogButton.icon = "add";
+        }
+      },
+      getInventoryCode: function() {
+        return this.inventoryCode;
       }
-      
+
     });
 
     

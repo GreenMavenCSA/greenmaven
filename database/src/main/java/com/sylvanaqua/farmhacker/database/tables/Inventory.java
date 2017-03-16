@@ -37,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Inventory extends TableImpl<InventoryRecord> {
 
-    private static final long serialVersionUID = 737287598;
+    private static final long serialVersionUID = -1341296004;
 
     /**
      * The reference instance of <code>farmhacker.inventory</code>
@@ -65,12 +65,17 @@ public class Inventory extends TableImpl<InventoryRecord> {
     /**
      * The column <code>farmhacker.inventory.measure</code>.
      */
-    public final TableField<InventoryRecord, Short> MEASURE = createField("measure", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<InventoryRecord, Double> MEASURE = createField("measure", org.jooq.impl.SQLDataType.FLOAT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0.0000", org.jooq.impl.SQLDataType.FLOAT)), this, "");
 
     /**
      * The column <code>farmhacker.inventory.time_entered</code>.
      */
     public final TableField<InventoryRecord, Timestamp> TIME_ENTERED = createField("time_entered", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "");
+
+    /**
+     * The column <code>farmhacker.inventory.inventory_code</code>.
+     */
+    public final TableField<InventoryRecord, String> INVENTORY_CODE = createField("inventory_code", org.jooq.impl.SQLDataType.VARCHAR.length(4), this, "");
 
     /**
      * Create a <code>farmhacker.inventory</code> table reference
