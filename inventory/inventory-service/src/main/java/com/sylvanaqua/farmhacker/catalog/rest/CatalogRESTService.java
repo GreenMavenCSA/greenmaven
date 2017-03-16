@@ -6,14 +6,14 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
 import com.sylvanaqua.farmhacker.catalog.entity.CatalogEntry;
+import com.sylvanaqua.farmhacker.catalog.entity.InventoryCode;
+import com.sylvanaqua.farmhacker.catalog.entity.InventoryItem;
 import com.sylvanaqua.farmhacker.catalog.service.CatalogService;
 import com.sylvanaqua.farmhacker.core.rest.RESTServiceBase;
 
@@ -40,13 +40,13 @@ public class CatalogRESTService extends RESTServiceBase {
 		JSONObject response = new JSONObject();
 		
 		CatalogEntry catalogEntry = 
-				new CatalogEntry(category, name, Double.parseDouble(retailPrice),
+				new CatalogEntry(0, category, name, Double.parseDouble(retailPrice),
 						         Double.parseDouble(wholesalePrice), 0);
 		
 		CatalogService catalogService = new CatalogService();
 		
 		try{
-			if(catalogService.create(catalogEntry)){
+			if(catalogService.createCatalogEntry(catalogEntry)){
 				response.put("result", 0);
 				response.put("message", "Catalog entry created!");
 			}
@@ -61,6 +61,48 @@ public class CatalogRESTService extends RESTServiceBase {
 		
 		return response.toString();
 
+	}
+	
+	/**
+	 * Create inventory item
+	 * 
+	 * @param categoryId Category for the inventory item being created
+	 * @param measure Measure (usually weight) of item
+	 * @return
+	 */
+	@GET
+	@Produces("application/json")
+	@Path("/createInventory")
+	public String createInventoryItem(@QueryParam("catalog_id") Integer catalogId, 
+									  @QueryParam("measure") Double measure) {
+		
+		JSONObject response = new JSONObject();
+		
+		InventoryItem inventoryItem = 
+				new InventoryItem(0, catalogId.intValue(), measure.doubleValue());
+		
+		CatalogService catalogService = new CatalogService();
+		
+		try{
+			InventoryCode newInventoryItemCode = catalogService.createInventoryItem(inventoryItem);
+			
+			if(newInventoryItemCode != null){
+				response.put("result", 0);
+				response.put("message", "Inventory item created!");
+				response.put("code", newInventoryItemCode.getCode());
+			}
+			else{
+				response.put("result", 1);
+				response.put("message", "There was an error creating this inventory item.");
+			}
+		}
+		catch(Exception e){
+			logException(e);
+			response.put("result", 1);
+			response.put("message", "There was an error creating this inventory item.");
+		}
+		
+		return response.toString();
 	}
 	
 	/**
@@ -93,7 +135,6 @@ public class CatalogRESTService extends RESTServiceBase {
 		return catalogEntries.toString();
 	}
 
-	
 
 	@GET
     @Path("ping")

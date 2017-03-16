@@ -7,8 +7,6 @@ package com.sylvanaqua.farmhacker.database.tables;
 import com.sylvanaqua.farmhacker.database.Farmhacker;
 import com.sylvanaqua.farmhacker.database.tables.records.InventoryValueRecord;
 
-import java.math.BigInteger;
-
 import javax.annotation.Generated;
 
 import org.jooq.Field;
@@ -31,7 +29,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InventoryValue extends TableImpl<InventoryValueRecord> {
 
-    private static final long serialVersionUID = 1265275676;
+    private static final long serialVersionUID = 764169018;
 
     /**
      * The reference instance of <code>farmhacker.inventory_value</code>
@@ -59,7 +57,7 @@ public class InventoryValue extends TableImpl<InventoryValueRecord> {
     /**
      * The column <code>farmhacker.inventory_value.SUM(inventory.measure)</code>.
      */
-    public final TableField<InventoryValueRecord, BigInteger> SUM_28INVENTORY_MEASURE_29 = createField("SUM(inventory.measure)", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(27), this, "");
+    public final TableField<InventoryValueRecord, Double> SUM_28INVENTORY_MEASURE_29 = createField("SUM(inventory.measure)", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
     /**
      * The column <code>farmhacker.inventory_value.retail_value</code>.
