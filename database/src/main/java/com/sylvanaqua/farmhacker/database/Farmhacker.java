@@ -6,6 +6,7 @@ package com.sylvanaqua.farmhacker.database;
 
 import com.sylvanaqua.farmhacker.database.tables.Catalog;
 import com.sylvanaqua.farmhacker.database.tables.CatalogCategoryVw;
+import com.sylvanaqua.farmhacker.database.tables.CatalogInventoryVw;
 import com.sylvanaqua.farmhacker.database.tables.FarmhackerUser;
 import com.sylvanaqua.farmhacker.database.tables.Inventory;
 import com.sylvanaqua.farmhacker.database.tables.InventoryValue;
@@ -36,7 +37,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Farmhacker extends SchemaImpl {
 
-    private static final long serialVersionUID = 124889809;
+    private static final long serialVersionUID = 1237468603;
 
     /**
      * The reference instance of <code>farmhacker</code>
@@ -52,6 +53,11 @@ public class Farmhacker extends SchemaImpl {
      * VIEW
      */
     public final CatalogCategoryVw CATALOG_CATEGORY_VW = com.sylvanaqua.farmhacker.database.tables.CatalogCategoryVw.CATALOG_CATEGORY_VW;
+
+    /**
+     * VIEW
+     */
+    public final CatalogInventoryVw CATALOG_INVENTORY_VW = com.sylvanaqua.farmhacker.database.tables.CatalogInventoryVw.CATALOG_INVENTORY_VW;
 
     /**
      * The table <code>farmhacker.farmhacker_user</code>.
@@ -110,6 +116,7 @@ public class Farmhacker extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             Catalog.CATALOG,
             CatalogCategoryVw.CATALOG_CATEGORY_VW,
+            CatalogInventoryVw.CATALOG_INVENTORY_VW,
             FarmhackerUser.FARMHACKER_USER,
             Inventory.INVENTORY,
             InventoryValue.INVENTORY_VALUE,

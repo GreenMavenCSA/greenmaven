@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Catalog extends TableImpl<CatalogRecord> {
 
-    private static final long serialVersionUID = -613200058;
+    private static final long serialVersionUID = -2144247896;
 
     /**
      * The reference instance of <code>farmhacker.catalog</code>
@@ -74,11 +74,6 @@ public class Catalog extends TableImpl<CatalogRecord> {
      * The column <code>farmhacker.catalog.wholesale_price</code>.
      */
     public final TableField<CatalogRecord, Double> WHOLESALE_PRICE = createField("wholesale_price", org.jooq.impl.SQLDataType.FLOAT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0.00", org.jooq.impl.SQLDataType.FLOAT)), this, "");
-
-    /**
-     * The column <code>farmhacker.catalog.units_available</code>.
-     */
-    public final TableField<CatalogRecord, Integer> UNITS_AVAILABLE = createField("units_available", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * Create a <code>farmhacker.catalog</code> table reference
