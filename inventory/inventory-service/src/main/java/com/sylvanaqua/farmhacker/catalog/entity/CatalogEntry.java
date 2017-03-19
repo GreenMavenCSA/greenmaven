@@ -24,7 +24,7 @@ public class CatalogEntry {
 	private double wholesalePrice;
 
 	@XmlElement(name="unitsAvailable")
-	private int unitsAvailable;
+	private long unitsAvailable;
 	
 	@Override
 	public String toString(){
@@ -45,7 +45,7 @@ public class CatalogEntry {
 	}
 	
 	public CatalogEntry(Integer id, String category, String name, 
-			            double retailPrice, double wholesalePrice, int unitsAvailable){
+			            double retailPrice, double wholesalePrice, long unitsAvailable){
 		this.id = id;
 		this.category = category;
 		this.name = name;
@@ -93,11 +93,11 @@ public class CatalogEntry {
 		this.wholesalePrice = wholesalePrice;
 	}
 	
-	public int getUnitsAvailable() {
+	public long getUnitsAvailable() {
 		return unitsAvailable;
 	}
 
-	public void setUnitsAvailable(int unitsAvailable){
+	public void setUnitsAvailable(long unitsAvailable){
 		this.unitsAvailable = unitsAvailable;
 	}
 	

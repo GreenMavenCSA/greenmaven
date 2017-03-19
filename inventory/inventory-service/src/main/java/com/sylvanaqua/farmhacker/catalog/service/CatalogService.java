@@ -18,9 +18,11 @@ import com.sylvanaqua.farmhacker.catalog.entity.InventoryCode;
 import com.sylvanaqua.farmhacker.catalog.entity.InventoryItem;
 import com.sylvanaqua.farmhacker.core.id.InventoryIDGenerator;
 import com.sylvanaqua.farmhacker.core.service.ServiceBase;
+import com.sylvanaqua.farmhacker.database.tables.records.CatalogInventoryVwRecord;
 import com.sylvanaqua.farmhacker.database.tables.records.CatalogRecord;
 
 import static com.sylvanaqua.farmhacker.database.tables.Catalog.CATALOG;
+import static com.sylvanaqua.farmhacker.database.tables.CatalogInventoryVw.CATALOG_INVENTORY_VW;
 import static com.sylvanaqua.farmhacker.database.tables.Inventory.INVENTORY;
 
 public class CatalogService extends ServiceBase {
@@ -109,13 +111,13 @@ public class CatalogService extends ServiceBase {
         try (Connection conn = getConnection()) {
         	DSLContext search = DSL.using(conn, SQLDialect.MYSQL);
         	
-        	Result<CatalogRecord> results = 
-	        	search.selectFrom(CATALOG)
-	        		  .where(CATALOG.NAME.like(appendLikeString(searchString))
-	        	      .or(CATALOG.CATEGORY.like(appendLikeString(searchString))))
+        	Result<CatalogInventoryVwRecord> results = 
+	        	search.selectFrom(CATALOG_INVENTORY_VW)
+	        		  .where(CATALOG_INVENTORY_VW.NAME.like(appendLikeString(searchString))
+	        	      .or(CATALOG_INVENTORY_VW.CATEGORY.like(appendLikeString(searchString))))
 	        		  .fetch();
         
-        	for(CatalogRecord result : results){
+        	for(CatalogInventoryVwRecord result : results){
         		CatalogEntry catalogEntry = 
         				new CatalogEntry(result.getId(),
         								 result.getCategory(), result.getName(), 

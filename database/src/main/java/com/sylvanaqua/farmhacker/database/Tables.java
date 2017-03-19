@@ -6,6 +6,7 @@ package com.sylvanaqua.farmhacker.database;
 
 import com.sylvanaqua.farmhacker.database.tables.Catalog;
 import com.sylvanaqua.farmhacker.database.tables.CatalogCategoryVw;
+import com.sylvanaqua.farmhacker.database.tables.CatalogInventoryVw;
 import com.sylvanaqua.farmhacker.database.tables.FarmhackerUser;
 import com.sylvanaqua.farmhacker.database.tables.Inventory;
 import com.sylvanaqua.farmhacker.database.tables.InventoryValue;
@@ -38,6 +39,11 @@ public class Tables {
      * VIEW
      */
     public static final CatalogCategoryVw CATALOG_CATEGORY_VW = com.sylvanaqua.farmhacker.database.tables.CatalogCategoryVw.CATALOG_CATEGORY_VW;
+
+    /**
+     * VIEW
+     */
+    public static final CatalogInventoryVw CATALOG_INVENTORY_VW = com.sylvanaqua.farmhacker.database.tables.CatalogInventoryVw.CATALOG_INVENTORY_VW;
 
     /**
      * The table <code>farmhacker.farmhacker_user</code>.

@@ -112,7 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <div style="padding:10px">
                          <form is="iron-form" method="get" action="/" id="{{getCatalogEditFormId(item.id)}}">
                             Add {{item.name}} to inventory</strong>)
-                            <paper-input id="{{getInventoryInputId(item.id)}}" label="Item weight" required auto-validate pattern="[+-]?[0-9]{1,3}(?:,?[0-9]{3})*\.[0-9]{1,4}" error-message="Enter number with 1 to 4 decimal places"></paper-input>
+                            <paper-input id="{{getInventoryInputId(item.id)}}" label="Item measure (lbs, doz, etc.)" required auto-validate pattern="[+-]?[0-9]{1,3}(?:,?[0-9]{3})*\.[0-9]{1,4}" error-message="Enter number with 1 to 4 decimal places"></paper-input>
                             <paper-button id="{{getInventoryFormButtonId(item.id)}}" on-click="saveInventoryItem">
                                 <iron-icon icon="save"></iron-icon>Save
                             </paper-button>
@@ -219,6 +219,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           this.$.modelInventoryConfirm.open();
         }
+
+        this.$.catalogGetDatasource.generateRequest();
       },
 
       //-------------------------------------------------------------------------
