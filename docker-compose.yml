@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  gdi-docker:
+    image: ${CONTAINER_REGISTRY}sylvanaqua/com.sylvanaqua.docker:0.1.0-SNAPSHOT
+    ports:
+      # Tomcat port
+      - "8280:8080"
+      # Tomcat debug port
+      - "8787:8787"
+    environment:
+      - CONFIG_ENV=docker-local
+      - DOCKERHOST=${LOCALHOST_IP}
+    mem_limit: 4g
