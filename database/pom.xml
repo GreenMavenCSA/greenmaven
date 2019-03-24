@@ -18,7 +18,7 @@
 	<dependency>
 	    <groupId>mysql</groupId>
 	    <artifactId>mysql-connector-java</artifactId>
-	    <version>6.0.5</version>
+	    <version>8.0.15</version>
 	</dependency>
   <dependency>
     <groupId>org.jooq</groupId>
@@ -96,7 +96,7 @@
 
 					    <!-- JDBC connection parameters -->
 					    <jdbc>
-					      <driver>com.mysql.jdbc.Driver</driver>
+					      <driver>com.mysql.cj.jdbc.Driver</driver>
 					      <url>jdbc:mysql://localhost:3306/farmhacker</url>
 			              <user>root</user>
 			              <password>F@rmhack3r</password>
@@ -133,17 +133,17 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sql-maven-plugin</artifactId>
                         <dependencies>
-						  <dependency>
-						    <groupId>mysql</groupId>
-						    <artifactId>mysql-connector-java</artifactId>
-						    <version>5.1.6</version>
-						  </dependency>
-					    </dependencies>
+            						  <dependency>
+            						    <groupId>mysql</groupId>
+            						    <artifactId>mysql-connector-java</artifactId>
+            						    <version>8.0.15</version>
+            						  </dependency>
+            					 </dependencies>
                         <configuration>
-                          <driver>com.mysql.jdbc.Driver</driver>
-				          <url>jdbc:mysql://localhost:3306/mysql</url>
-				          <username>root</username>
-				          <password>F@rmhack3r</password>
+                          <driver>com.mysql.cj.jdbc.Driver</driver>
+        				          <url>jdbc:mysql://localhost:3306/mysql</url>
+        				          <username>root</username>
+        				          <password>F@rmhack3r</password>
                         </configuration>
                         <executions>
                             <execution>
@@ -155,7 +155,7 @@
                                 <configuration>
                                     <!-- no transaction -->
                                     <autocommit>true</autocommit>
-									<sqlCommand>drop database if exists farmhacker;</sqlCommand>
+									                  <sqlCommand>drop database if exists farmhacker;</sqlCommand>
                                 </configuration>
                             </execution>
                             <execution>
@@ -167,7 +167,7 @@
                                 <configuration>
                                     <!-- no transaction -->
                                     <autocommit>true</autocommit>
-									<sqlCommand>create database if not exists farmhacker;</sqlCommand>
+									                  <sqlCommand>create database if not exists farmhacker;</sqlCommand>
                                 </configuration>
                             </execution>
                         </executions>

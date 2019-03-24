@@ -12,6 +12,7 @@
     <module>inventory</module>
     <module>landing-page</module>
     <module>core-service</module>
+    <module>docker</module>
   </modules>
 
   <dependencies>

@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  greenmaven-docker:
+    image: ${CONTAINER_REGISTRY}sylvanaqua/com.sylvanaqua.docker:0.1.0-SNAPSHOT
+    ports:
+      # Tomcat port
+      - "8280:8080"
+      # Tomcat debug port
+      - "8787:8787"
+    environment:
+      - CONFIG_ENV=docker-local
+      - DOCKERHOST=${LOCALHOST_IP}
+    mem_limit: 4g
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: F@rmhack3r
+    ports:
+      - 3306:3306
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
