@@ -96,7 +96,7 @@
 
 					    <!-- JDBC connection parameters -->
 					    <jdbc>
-					      <driver>com.mysql.jdbc.Driver</driver>
+					      <driver>com.mysql.cj.jdbc.Driver</driver>
 					      <url>jdbc:mysql://localhost:3306/farmhacker</url>
 			              <user>root</user>
 			              <password>F@rmhack3r</password>
@@ -140,7 +140,7 @@
             						  </dependency>
             					 </dependencies>
                         <configuration>
-                          <driver>com.mysql.jdbc.Driver</driver>
+                          <driver>com.mysql.cj.jdbc.Driver</driver>
         				          <url>jdbc:mysql://localhost:3306/mysql</url>
         				          <username>root</username>
         				          <password>F@rmhack3r</password>

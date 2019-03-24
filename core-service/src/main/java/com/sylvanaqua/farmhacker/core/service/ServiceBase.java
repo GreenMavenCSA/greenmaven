@@ -18,7 +18,7 @@ public class ServiceBase {
 		String userName = this.dbProperties.getDatabaseUser();
         String password = this.dbProperties.getDatabasePassword();
         String url = this.dbProperties.getDatabaseUrl();
-        Class.forName(this.dbProperties.getDatabaseDriverClass());
+        Class.forName(this.dbProperties.getDatabaseDriverClass()).newInstance();
         
         return DriverManager.getConnection(url, userName, password);
 	}
